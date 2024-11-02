@@ -1,0 +1,183 @@
+{% extends 'base.html' %}
+{% block css %}
+
+  <!-- Vendor CSS Files -->
+  <link href="{{url_for('static',filename='assets/vendor/aos/aos.css')}}" rel="stylesheet">
+  <link href="{{url_for('static',filename='assets/vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
+  <link href="{{url_for('static',filename='assets/vendor/bootstrap-icons/bootstrap-icons.css')}}" rel="stylesheet">
+  <link href="{{url_for('static',filename='assets/vendor/boxicons/css/boxicons.min.css')}}" rel="stylesheet">
+  <link href="{{url_for('static',filename='assets/vendor/glightbox/css/glightbox.min.css')}}" rel="stylesheet">
+  <link href="{{url_for('static',filename='assets/vendor/swiper/swiper-bundle.min.css')}}" rel="stylesheet">
+
+  <!--Icon Font Stylesheet-->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+  <!--ADDED LINKS-->
+  <link rel="stylesheet" href="{{url_for('static',filename='assets/css/linearicons.css')}}">
+	<link rel="stylesheet" href="{{url_for('static',filename='assets/css/font-awesome.min.css')}}">
+  <link rel="stylesheet" href="{{url_for('static',filename='assets/css/categories/magnific-popup.css')}}">
+	<link rel="stylesheet" href="{{url_for('static',filename='assets/css/categories/nice-select.css')}}">					
+	<link rel="stylesheet" href="{{url_for('static',filename='assets/css/categories/animate.min.css')}}">
+	<link rel="stylesheet" href="{{url_for('static',filename='assets/css/categories/owl.carousel.css')}}">
+  <!--end of added links-->
+
+  <!-- Template Main CSS File -->
+  <link href="{{url_for('static',filename='assets/css/style.css')}}" rel="stylesheet">
+
+</head>
+
+{% endblock %}
+
+  {% block content %}
+
+  {% for job in result %}
+
+  <!-- Start post Area -->
+  <section class="post-area section-gap">
+    <div class="container">
+        <div class="row justify-content-center d-flex">
+            <div class="col-lg-8 post-list">
+                <div class="single-post d-flex flex-row">
+                    <div class="thumb">
+                        <img src="{{url_for('static',filename='assets/img/employerprofilepic/' + job[25])}}" alt="" style="height: 69px; width: 109px;">
+                        <ul class="tags"  style="display: flex; justify-content: space-between; flex-wrap: wrap;">
+                            <li>
+                                <a href="{{url_for('categories',c = job[2])}}">{{job[2]}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="details">
+                        <div class="title d-flex flex-row justify-content-between">
+                            <div class="titles">
+                                <a href="#"><h4>{{job[3]}}</h4></a>
+                                <h6>{{job[17]}}</h6>					
+                            </div>
+                            <ul class="btns">
+                                <li><a href="{{url_for('userpage')}}"><span class="lnr lnr-heart"></span></a></li>
+                                <li><a href="{{url_for('userpage')}}">Apply</a></li>
+                            </ul>
+                        </div>
+                        <p class="jobdescription" style="white-space: pre-line;">
+                            {{job[8]}}
+                        </p>
+                        <p>Job Nature: {{job[10]}}</p>
+                        <p>Preferred job level: {{job[11]}}</p>
+                        <p class="address"><span class="lnr lnr-map"></span>{{job[12]}}</p>
+                        <p class="address"><span class="lnr lnr-database"></span> ₱{{job[4]}} - ₱{{job[5]}}</p>
+                    </div>
+                </div>	
+
+                <div class="single-post job-details">
+                    <h4 class="single-title">Job Description</h4>
+                    <h5> (Who we are looking for)</h5>
+                    <p id="intro" style="white-space: pre-line;">
+                      {{job[8]}}
+                    </p>
+                </div>
+                <div class="single-post job-experience">
+                    <h4 class="single-title">Skills/Qualifications</h4>
+                    <p style="white-space: pre-line;">
+                      {{job[13]}}
+                    </p>
+                </div>
+                <script>
+                  const originalText = "{{job[8]}}"; // Replace with actual text
+                  const formattedText = originalText.replace(/\\n/g, "<br>");
+                  document.getElementById("intro").innerHTML = formattedText;
+                </script>
+
+                {% endfor %}
+                										
+            </div>
+            <div class="col-lg-4 sidebar">
+                <div class="single-slidebar">
+                    <h4>Jobs by Location</h4>
+                    <ul class="cat-list">
+
+                        {% set count = [] %}
+
+                        {% for location in loclist %}
+
+                        <li><a class="justify-content-between d-flex" href="{{url_for('categories',c = location[0])}}"><p>{{location[0]}}</p><span>{{locnumjob[count|length]}}</span></a></li>
+                        
+                        {% set __ = count.append(1) %}
+
+                        {% endfor %}
+
+                    </ul>
+                </div>
+                <div class="single-slidebar">
+                    <h4>Top rated job posts</h4>
+                    <div class="active-relatedjob-carusel">
+          
+                      {% for ratedjobs in rated %}
+
+                      <div class="single-rated">
+                        <img class="img-fluid" src="../static/assets/img/employerprofilepic/{{ratedjobs[9]}}" alt="">
+                        <a href="job-single.html"><h4>{{ratedjobs[1]}}</h4></a>
+                        <h6>{{ratedjobs[2]}}</h6>
+                        <p class="jobdescription">
+                          {{ratedjobs[3]}}
+                        </p>
+                        <p>Job type: {{ratedjobs[4]}}</p>
+                        <p class="address"><span class="lnr lnr-map"></span> {{ratedjobs[5]}}</p>
+                        <p class="address"><span class="lnr lnr-database"></span> ₱{{ratedjobs[6]}} - ₱{{ratedjobs[7]}}</p>
+                        <a href="{{url_for('job_details', id = ratedjobs[0])}}" class="btns text-uppercase">Apply job</a>
+                      </div>
+          
+                      {% endfor %}
+                                  
+                    </div>
+                  </div>												
+                <div class="single-slidebar">
+                    <h4>Jobs by Category</h4>
+                    <ul class="cat-list">
+
+                        {% set count = [] %}
+
+                        {% for category in catlist %}
+
+                        <li><a class="justify-content-between d-flex" href="{{url_for('categories',c = category[0])}}"><p>{{category[0]}}</p><span>{{numjob[count|length]}}</span></a></li>
+                        
+                        {% set __ = count.append(1) %}
+
+                        {% endfor %}
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>	
+</section>
+<!-- End post Area -->
+
+{% endblock %}
+ 
+{% block js %}
+
+  <!-- Vendor JS Files -->
+  <script src="{{url_for('static',filename='assets/vendor/purecounter/purecounter_vanilla.js')}}"></script>
+  <script src="{{url_for('static',filename='assets/vendor/aos/aos.js')}}"></script>
+  <script src="{{url_for('static',filename='assets/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+  <script src="{{url_for('static',filename='assets/vendor/glightbox/js/glightbox.min.js')}}"></script>
+  <script src="{{url_for('static',filename='assets/vendor/isotope-layout/isotope.pkgd.min.js')}}"></script>
+  <script src="{{url_for('static',filename='assets/vendor/swiper/swiper-bundle.min.js')}}"></script>
+
+  <!-- Template Main JS File -->
+  <script src="{{url_for('static',filename='assets/js/main.js')}}"></script>
+
+  <!--ADDED SCRIPTS-->
+  <script src="{{url_for('static',filename='assets/js/categories/vendor/jquery-2.2.4.min.js')}}"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="{{url_for('static',filename='assets/js/categories/easing.min.js')}}"></script>			
+	<script src="{{url_for('static',filename='assets/js/categories/hoverIntent.js')}}"></script>
+	<script src="{{url_for('static',filename='assets/js/categories/superfish.min.js')}}"></script>	
+	<script src="{{url_for('static',filename='assets/js/categories/jquery.ajaxchimp.min.js')}}"></script>
+	<script src="{{url_for('static',filename='assets/js/categories/jquery.magnific-popup.min.js')}}"></script>	
+	<script src="{{url_for('static',filename='assets/js/categories/owl.carousel.min.js')}}"></script>			
+	<script src="{{url_for('static',filename='assets/js/categories/jquery.sticky.js')}}"></script>
+	<script src="{{url_for('static',filename='assets/js/categories/jquery.nice-select.min.js')}}"></script>			
+	<script src="{{url_for('static',filename='assets/js/categories/parallax.min.js')}}"></script>		
+	<script src="{{url_for('static',filename='assets/js/categories/main.js')}}"></script>
+
+{% endblock %}
