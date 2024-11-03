@@ -1,0 +1,235 @@
+{% extends '/userpage/userbase.html' %}
+{%block username %}<li><a href="#" style="font-size: 1rem; overflow: hidden; text-overflow: ellipsis;
+  max-width: 100%; white-space: nowrap;">Welcome, {{name}}!</a></li>{% endblock %}
+
+{% block css %}
+
+  <!--Icon Font Stylesheet-->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="{{url_for('static',filename='assets/css/linearicons.css')}}">
+  <link rel="stylesheet" href="{{url_for('static',filename='assets/css/font-awesome.min.css')}}">
+
+  <!-- Template Main CSS File -->
+  <link href="{{url_for('static',filename='assets/css/style.css')}}" rel="stylesheet">
+
+</head>
+{% endblock %}
+
+
+    {% block content %}
+
+<div style="margin-top: 50px;">
+<div class="p-5 bg-white rounded shadow my-5 col-lg-10 col-md-10 mx-auto flex-wrap" style="color: #878786;">
+    <!-- Rounded tabs -->
+    <ul id="myTab" role="tablist" class="nav nav-tabs nav-pills flex-column flex-sm-row bg-light border-0 rounded-nav">
+
+      <li class="nav-item ">
+        <a id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="{{tabs[0][0]}}" class="nav-link border-0 text-uppercase font-weight-bold {{tabs[0][2]}}">Saved Jobs</a>
+      </li>
+      <li class="nav-item ">
+        <a id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="{{tabs[1][0]}}" class="nav-link border-0 text-uppercase font-weight-bold {{tabs[1][2]}}">Applied Jobs</a>
+      </li>
+    </ul>
+    <div id="myTabContent" class="tab-content post-list">
+      
+      <div id="home" role="tabpanel" aria-labelledby="home-tab" class="tab-pane fade px-4 py-5 {{tabs[0][1]}}">
+
+        {% for jobs in saved %}
+        
+
+        <div class="single-post flex-row" id="jobpost{{jobs[8]}}" style="display: flex;">
+            <div class="thumb">
+              <img src="{{url_for('static',filename='assets/img/employerprofilepic/' + jobs[10])}}" alt="" style="margin-right: 10px;">
+              <ul class="tags">
+                <li class="">
+                  <a href="{{url_for('user_homepage',page = 0, c = jobs[1])}}">{{jobs[1]}}</a>
+                </li>
+                
+              </ul>
+            </div>
+            <div class="details">
+              <div class="title d-flex flex-row justify-content-between">
+                <div class="titles">
+                  <a href="{{url_for('userjobdetails', id = jobs[8])}}"><h4>{{jobs[0]}}</h4></a>
+                  <a href="{{url_for('usercompanyprofile', id = jobs[9])}}"><h6>{{jobs[7]}}</h6></a>					
+                </div>
+                <ul class="btns">
+
+                  {% if jobs[8] in savedindex %}
+
+                  <li class=" justify-content-end"><a href="#" class="myAnchor" data-userid="{{userid}}" data-jobId="{{jobs[8]}}" id="myAnchor"><span class=""><i class="bi bi-heart-fill" style="color: red;"></i></span></a></li>
+                  
+                    {% if jobs[8] in appliedposts %}
+                    <li class=" justify-content-end"><a href="{{url_for('userjobdetails',id = jobs[8])}}">Applied</a></li>
+                    {% else %}
+                    <li class=" justify-content-end"><a href="{{url_for('userjobdetails',id = jobs[8])}}">Apply</a></li>
+                    {% endif %}
+
+                  {% else %}
+
+                  <li class=" justify-content-end"><a href="#" class="myAnchor" data-userid="{{userid}}" data-jobId="{{jobs[8]}}" id="myAnchor"><span class=""><i class="bi bi-heart" style="color: red;"></i></span></a></li>
+
+                    {% if jobs[8] in appliedposts %}
+                    <li class=" justify-content-end"><a href="{{url_for('userjobdetails',id = jobs[8])}}">Applied</a></li>
+                    {% else %}
+                    <li class=" justify-content-end"><a href="{{url_for('userjobdetails',id = jobs[8])}}">Apply</a></li>
+                    {% endif %}
+
+                  {% endif %}
+
+
+                </ul>
+              </div>
+              <div class="myAlert alert alert-info mt-3" id="myAlert{{jobs[8]}}" style="display: none;">
+                <!-- Message will be displayed here -->
+              </div>
+              
+              <p>
+                {{jobs[2]}}
+              </p>
+              <p>Job type: {{jobs[3]}}</p>
+              <p class="address"><span class="lnr lnr-map"></span>{{jobs[4]}}</p>
+              <p class="address"><span class="lnr lnr-database"></span>₱ {{jobs[5]}} - ₱{{jobs[6]}}</p>
+            </div>
+          </div>
+
+          {% endfor %}
+          
+      </div>
+
+      <div id="profile" role="tabpanel" aria-labelledby="profile-tab" class="tab-pane fade px-4 py-5 {{tabs[1][1]}}">
+        
+        {% for jobs in postJobWithAppliedStat %}
+        
+        <div class="single-post d-flex flex-row">
+            <div class="thumb">
+              <img src="{{url_for('static',filename='assets/img/employerprofilepic/' + jobs[10])}}" alt="" style="margin-right: 10px;">
+              <ul class="tags">
+                <li class="">
+                  <a href="{{url_for('user_homepage',page = 0, c = jobs[1])}}">{{jobs[1]}}</a>
+                </li>
+                
+              </ul>
+            </div>
+            <div class="details">
+              <div class="title d-flex flex-row justify-content-between">
+                <div class="titles">
+                  <a href="{{url_for('userjobdetails', id = jobs[8])}}"><h4>{{jobs[0]}}</h4></a>
+                  <a  href="{{url_for('usercompanyprofile', id = jobs[9])}}"><h6>{{jobs[7]}}</h6></a>		
+                </div>
+                <ul class="btns">
+                  
+                  <li><a href="#">Applied</a></li>
+                </ul>
+              </div>
+
+              <div class="myAlert alert alert-info mt-3" id="myAlert{{jobs[8]}}" style="display: none;">
+                <!-- Message will be displayed here -->
+            </div>
+
+              <span><p>
+                {{jobs[2]}}
+              </p></span>
+              <p>Job type:{{jobs[3]}}</p>
+              <p class="address"><span class="lnr lnr-map"></span>{{jobs[4]}}</p>
+              <p class="address"><span class="lnr lnr-database"></span> ₱{{jobs[5]}} - ₱{{jobs[6]}}</p>
+            </div>
+          </div>
+
+          {% endfor %}
+      </div>
+
+    </div>
+    <!-- End rounded tabs -->
+  </div>
+</div>
+
+
+
+
+
+{% endblock %}
+
+    {% block js %}
+
+    <!-- Vendor JS Files -->
+    <script src="{{url_for('static',filename='assets/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+    <script src="{{url_for('static',filename='assets/vendor/glightbox/js/glightbox.min.js')}}"></script>
+    <script src="{{url_for('static',filename='assets/vendor/isotope-layout/isotope.pkgd.min.js')}}"></script>
+    <script src="{{url_for('static',filename='assets/vendor/swiper/swiper-bundle.min.js')}}"></script>
+
+    <!-- Template Main JS File -->
+    <script src="{{url_for('static',filename='assets/js/main.js')}}"></script>
+
+    <script src="{{url_for('static',filename='assets/js/jquery.js')}}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+      $(document).ready(function() {
+          //all myanchor
+          $('.myAnchor').on('click', function(e) {
+              e.preventDefault(); // Prevent default link behavior
+    
+              
+              const anchor = this;
+              const icon = anchor.querySelector('i');
+              const jobId = anchor.getAttribute('data-jobId');
+              const userId = anchor.getAttribute('data-userid');
+              const alertBox = document.getElementById('myAlert' + jobId);
+  
+              const data =  [jobId, userId];
+              const senddata = data.toString();
+    
+              // Toggle icon class (plus to minus)
+              icon.classList.toggle('bi-heart');
+              icon.classList.toggle('bi-heart-fill');
+    
+              // Update the alert message
+              if (icon.classList.contains('bi-heart-fill')) {
+                  alertBox.innerHTML = "Job post saved!";
+    
+                  
+                  $.ajax({ 
+                    url: '/bookmark', 
+                    type: 'POST', 
+                    data: { 'data': jobId, 'data2': userId }, 
+                    success: function(response) { 
+                      console.log('Response from Flask:', response);
+                    }, 
+                    error: function(error) { 
+                        console.log(error); 
+                    } 
+                  });
+    
+    
+              } else {
+                  
+                  alertBox.innerHTML = 'Job post unsaved.';
+
+                  $.ajax({ 
+                    url: '/unbookmark', 
+                    type: 'POST', 
+                    data: { 'data': jobId, 'data2': userId }, 
+                    success: function(response) { 
+                      console.log('Response from Flask:', response);
+                    }, 
+                    error: function(error) { 
+                        console.log(error); 
+                    } 
+                  });
+              }
+    
+              // Show/hide the alert 
+              alertBox.style.display = 'block';
+              setTimeout(() => {
+                  alertBox.style.display = 'none';
+              }, 3000); // Hide after 3 seconds
+
+
+          });
+      });
+    </script>
+
+    {% endblock %}

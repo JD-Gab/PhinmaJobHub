@@ -1,0 +1,815 @@
+{% extends '/userpage/userbase.html' %}
+{%block username %}<li><a href="#" style="font-size: 1rem; overflow: hidden; text-overflow: ellipsis;
+    max-width: 100%; white-space: nowrap;">Welcome, {{name}}!</a></li>{% endblock %}
+
+{% block css %}
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="{{url_for('static',filename='assets/css/style.css')}}" rel="stylesheet">
+  
+    <style>
+        .profile-info-list li{
+            color: #fff;
+        }
+        .profile-info-list .value{
+            color: #fff;
+        }
+        .col-md-4 li .value, .col-md-4 li .field, .col-md-4 li.title{
+            color: #000;
+        }
+    </style>
+
+</head>
+{% endblock %}
+
+    {% block content %}
+
+
+    {% for pi in profile %}
+    <div class="container" style="margin-top: 80px;">
+        <div id="content" class="content p-0">
+            <div class="profile-header">
+                <div class="profile-header-cover"></div>
+                <div class="profile-header-content">
+                    <div class="profile-header-img" style="width: 100px; height: 100px;">
+                        {% if 'https' in pi[17] %}
+                        <img src="{{pi[17]}}" style="max-width: 100%; max-height: 100%; height: 100%;">
+                        {% else %}
+                        <img src="{{url_for('static',filename='assets/img/userprofilepic/' + pi[17])}}" style="max-width: 100%; max-height: 100%; height: 100%; object-fit: contain;">
+                        {% endif %}
+                    </div>
+                    <div class="profile-header-info">
+                        <h4 class="m-t-sm">{{pi[24]}}</h4>
+                        
+                        <br>
+                        <a href="#" class="btn btn-xs btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#exampleModal">Edit Profile</a>
+                    </div>
+                </div>
+
+                            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Update profile picture</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                            <form action="{{url_for('profilepicupdate')}}" method="POST" enctype = "multipart/form-data">
+                            <div class="col-md-12">
+                            <input type="file" name="profilepic" accept=".jpg, .jpeg, .png, .webp" onchange="previewImage(event)">
+                            </div>
+                            <br>
+                            <div class="profile-header-img" style="width: 250px;height: 250px; margin-left: 100px; margin-right: 100px;">
+                                {% if 'https' in pi[17] %}
+                                <img src="{{pi[17]}}" style="max-width: 100%; max-height: 100%; height: 100%; justify-content: center;" id="preview">
+                                {% else %}
+                                <img src="{{url_for('static',filename='assets/img/userprofilepic/' + pi[17])}}" style="max-width: 100%; max-height: 100%; height: 100%; justify-content: center;" id="preview">
+                                {% endif %}
+                            </div>
+                          
+                    </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <input type="submit" class="btn btn-primary" value="Update profile"></input>
+                    </form>
+                    
+                    </div>
+                </div>
+                </div>
+            </div>
+
+            <script type="text/javascript">
+                function previewImage(event) {
+                   var input = event.target;
+                   var image = document.getElementById('preview');
+                   if (input.files && input.files[0]) {
+                      var reader = new FileReader();
+                      reader.onload = function(e) {
+                         image.src = e.target.result;
+                      }
+                      reader.readAsDataURL(input.files[0]);
+                   }
+                }
+             </script>
+             
+
+            <!-- END OF MODAL-->
+
+
+                
+            </div>
+
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Done!</strong> {{messages[0]}}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endif %}
+            {% endwith %}
+
+            <div class="profile-container">
+                <div class="row row-space-20" >
+                    <div class="col-md-8">
+                        <div class="" style="display: flex;"><h6><strong>ABOUT</strong></h6><button class="btn btn-success btn-sm mb-2 mx-3" data-bs-toggle="modal" data-bs-target="#editabout">Edit</button></div>
+                        <p>{{pi[20]}}</p>
+                        <div class="tab-content p-0">
+                            <div class="tab-pane active show" id="profile-about">
+                                <table class="table table-profile">
+                                    <thead >
+                                        <tr>
+                                            
+                                            <th colspan="2">WORK AND EDUCATION <div class="btn btn-sm btn-success mx-3 my-2" id="editButton" > Edit </div></th>
+                                            
+                                            
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="field" style="border-radius: 0px 0px 0px 0px;">Career History</td>
+                                            
+                                            <td class="value">
+                                                <div class="">
+                                                    
+                                                    <input type="text" class="form-control my-2" id="company1" placeholder="Enter company..." value="{{pi[3]}}" disabled style="border: none; font-weight: bold; background-color: #fff;">
+                                                    
+                                                    
+                                                    <input  type="text" class="form-control my-0" id="editableText1" placeholder="Enter profession..." value="{{pi[4]}}" disabled style="border: none; background-color: #fff;">
+                                                </div>
+                                                
+                                                <div class="">
+                                                    
+                                                    
+                                                    <input type="text"  class="form-control my-2" id="editableText1" placeholder="Enter company..." value="{{pi[5]}}" disabled style="border: none; font-weight: bold;">
+                                                    
+                                                    
+                                                    <input type="text"  class="form-control my-0" id="editableText1" placeholder="Enter profession..." value="{{pi[6]}}" disabled style="border: none;">
+                                                    
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+        <td class="field">Education</td>
+        <td class="value">
+        <div class="m-b-5">
+        <b >University</b> <br/>
+        
+        <input type="text"  class="form-control my-0 pl-0" placeholder="Enter University you attend" id="editableText1" value="{{pi[7]}}" disabled style="border: none;">
+        </div>
+        <div>
+        <b >High School</b> <br/>
+        
+        <input type="text"  class="form-control my-0 pl-0" placeholder="Enter High school you attend" id="editableText1" value="{{pi[8]}}" disabled style="border: none;">
+        </div>
+        </td>
+        </tr>
+        <tr>
+        <td class="field">Skills</td>
+        <td class="value">
+        
+        <div class="flex-nowrap">
+        <input type="text"  class="form-control my-0" placeholder="Place your skills here" id="myInput" value="{{pi[9]}}" disabled style="border: none;">
+        </div>
+        </td>
+        </tr>
+        </tbody>
+        </table>
+        <table class="table table-profile">
+        <thead>
+        <tr>
+        <th colspan="2">CONTACT INFORMATION <div class="btn btn-sm btn-success mx-3 my-2" id="editButton2"> Edit </div></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td class="field">Mobile Phones</td>
+        <td class="value">
+        
+        <input type="text"  class="form-control my-0" placeholder="Phone number" id="phone" value="{{pi[10]}}" disabled  validation="[0-9]{9}" style="border: none;">
+        
+        </td>
+        </tr>
+        <tr>
+        <td class="field">Email</td>
+        <td class="value">
+        <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="6b0a0f0602052b02050d0205021f0e45080406">{{pi[1]}}</a>
+        
+        </td>
+        </tr>
+        <tr>
+        
+        <tr>
+        <td class="field">Address</td>
+        <td class="value">
+        
+        <input type="text"  class="form-control my-0" placeholder="Enter your address" id="address" value="{{pi[11]}}" disabled style="border: none;">
+        
+        </td>
+        </tr>
+        </tbody>
+        </table>
+        <table class="table table-profile">
+        <thead>
+        <tr>
+        <th colspan="2">PREFERENCES <div class="btn btn-sm btn-success mx-3 my-2" id="editButton3"> Edit </div></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td class="field">Preferred work type</td>
+        <td class="value">
+       
+
+       <div class="col-md-6 col-lg-6">
+       <select class="form-select" id="worktype" aria-label="Default select example" disabled>
+
+        {% if pi[12] == '' %}
+        <option selected value="" disabled> Select preferred work type</option>
+
+        {% else %}
+        <option selected value="{{pi[12]}}" disabled>{{pi[12]}}</option>
+
+        {% endif %}
+
+        <option value="Part Time">Part Time</option>
+        <option value="Full Time">Full Time</option>
+        <option value="Other">Other</option>
+      </select>
+    </div>
+
+        </td>
+        </tr>
+        <tr>
+        <td class="field">Expected salary</td>
+        <td class="value">
+        
+
+        <div class="col-md-6 col-lg-6">
+            <select class="form-select" id="salary" aria-label="Default select example" disabled>
+     
+             {% if pi[13] == '' %}
+             <option selected value="" disabled> Select expected salary</option>
+     
+             {% else %}
+             <option selected value="{{pi[13]}}" disabled>{{pi[13]}}</option>
+     
+             {% endif %}
+     
+             <option value="10,000 below">10,000 below</option>
+             <option value="11,000 - 20,0000">11,000 - 20,0000</option>
+             <option value="21,000 - 40,0000">21,000 - 40,0000</option>
+             <option value="41,000 - 100,0000">41,000 - 100,0000</option>
+             <option value="100,000 above">100,000 above </option>
+           </select>
+         </div>
+         <div class="form-check form-check-inline mt-1">
+            <input class="form-check-input" type="radio" name="salarytype" id="inlineRadio1" value="Monthly" disabled {{salarytype[0]}}>
+            <label class="form-check-label" for="inlineRadio1"><small>Monthly</small></label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="salarytype" id="inlineRadio2" value="Yearly" disabled {{salarytype[1]}}>
+            <label class="form-check-label" for="inlineRadio2"><small>Yearly</small></label>
+          </div>
+        
+        </td>
+        </tr>
+        <tr>
+        <td class="field">Preferred location</td>
+        <td class="value">
+       
+
+       <div class="col-md-6 col-lg-6">
+       <input class="form-control" list="datalistOptions" id="location" value="{{pi[15]}}" disabled placeholder="Enter preferred location">
+        <datalist id="datalistOptions">
+        <option value="Iloilo City">
+        <option value="Jaro, Iloilo">
+        <option value="Molo">
+        <option value="La Paz, Jaro">
+        <option value="Oton">
+        </datalist>
+
+        </div>
+        
+        </td>
+        </tr>
+        <tr>
+        <td class="field">Availability</td>
+        <td class="value">
+        
+
+        <div class="col-md-6 col-lg-6">
+            <select class="form-select" id="avail" aria-label="Default select example" disabled>
+     
+             {% if pi[16] == '' %}
+             <option selected value="" disabled> Select availability</option>
+     
+             {% else %}
+             <option selected value="{{pi[16]}}" disabled>{{pi[16]}}</option>
+     
+             {% endif %}
+     
+             <option value="2 weeks">2 weeks</option>
+             <option value="This week">This week</option>
+             <option value="Tomorrow">Tomorrow</option>
+             <option value="Whenever">Whenever</option>
+           </select>
+         </div>
+        
+        </td>
+        </tr>
+        </tbody>
+        </table>
+        </div>
+        </div>
+        </div>
+        <div class="col-md-4 hidden-xs hidden-sm">
+        <ul class="profile-info-list">
+        <li class="title">PERSONAL INFORMATION</li>
+        
+        <li>
+        <div class="field">Skills:</div>
+        <div class="value" >{{pi[9]}}</div>
+        </li>
+        
+        <li>
+        <div class="field">Address:</div>
+        <div class="value">{{pi[11]}}</div>
+        </li>
+        <li>
+       
+        </li>
+        <li>
+        <div class="field">Phone No.:</div>
+        <div class="value">
+        {{pi[10]}}
+        </div>
+        </li>
+        
+        </ul>
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+
+        {% endfor %}
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="editabout" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog  modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Edit your about</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            
+            <form action="{{url_for('profile_data')}}" method="POST">
+
+            <div class="mb-3 col-lg-12">
+                <label for="inputPassword" class="col-lg-12 col-md-12 col-form-label">Include your introduction, skills, experience, achievements and such.</label>
+                <div class="col-lg-12">  
+                    <textarea class="form-control" rows="6" type="text" name="about" placeholder="" aria-label="default input example">{{profile[0][20]}}</textarea>
+                </div>
+            </div>
+
+            
+
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+
+    </form>
+      </div>
+    </div>
+  </div>
+
+
+
+        <!-- Modal -->
+<div class="modal fade" id="workedu" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog  modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Work and Education</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+
+            <div><label class="col-sm-12 mb-3"><b>Career History</b></label></div>
+            <div class="row"> <div class="col-sm-2"></div> <div class="col-sm-10"> <small style="font-size: 12px; color: #dd9000;">Please leave as blank if without experience yet</small></div></div>
+            <div class="mb-3 row">
+                <label for="inputPassword" class="col-sm-2 col-form-label">Company</label>
+                <div class="col-sm-10">  
+                    <input class="form-control" type="text" value="" placeholder="Company name" aria-label="default input example">
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label for="inputPassword" class="col-sm-2 col-form-label">Profession</label>
+                <div class="col-sm-10">
+                    <input class="form-control" type="text" value="" placeholder="Your position" aria-label="default input example">
+                </div>
+            </div>
+
+            <div class="mb-3 row">
+                <label for="inputPassword" class="col-sm-2 col-form-label">Company</label>
+                <div class="col-sm-10">  
+                    <input class="form-control" type="text" value="" placeholder="Another company name" aria-label="default input example">
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label for="inputPassword" class="col-sm-2 col-form-label">Profession</label>
+                <div class="col-sm-10">
+                    <input class="form-control" type="text" value="" placeholder="Your position" aria-label="default input example">
+                </div>
+            </div>
+
+            <div><label class="col-sm-12 my-3"><b>Education</b></label></div>
+            <div class="mb-3 row">
+                <label for="inputPassword" class="col-sm-2 col-form-label">University</label>
+                <div class="col-sm-10">  
+                    <input class="form-control" value="" type="text" placeholder="Your university" aria-label="default input example">
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label for="inputPassword" class="col-sm-3 col-form-label">High School</label>
+                <div class="col-sm-9">  
+                    <input class="form-control" type="text" value="" placeholder="Your high school" aria-label="default input example">
+                </div>
+            </div>
+
+
+            <div><label class="col-sm-12 my-3"><b>Skills</b></label></div>
+            <div class="mb-3 row">
+                <label for="inputPassword" class="col-sm-2 col-form-label">Your skills</label>
+                <div class="col-sm-10">  
+                    <input class="form-control" type="text" value="" placeholder="Team building, expertise, etc." aria-label="default input example">
+                </div>
+            </div>
+            
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+   <!-- Modal -->
+<div class="modal fade" id="contactinfo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog  modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Contact Information</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+         
+            <div class="mb-3 row">
+                <label for="inputPassword" class="col-sm-4 col-form-label">Mobile Phone</label>
+                <div class="col-sm-8">  
+                    <input class="form-control" type="text" placeholder="" aria-label="default input example">
+                </div>
+            </div>
+
+            <div class="mb-3 row">
+                <label for="inputPassword" class="col-sm-2 col-form-label">Email</label>
+                <div class="col-sm-10">  
+                    <input class="form-control" type="email" placeholder="your email address..." aria-label="default input example">
+                </div>
+            </div>
+
+            <div class="mb-3 row">
+                <label for="inputPassword" class="col-sm-2 col-form-label">Address</label>
+                <div class="col-sm-10">  
+                    <input class="form-control" type="text" placeholder="Where you currently live" aria-label="default input example">
+                </div>
+            </div>
+
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+   <!-- Modal -->
+<div class="modal fade" id="preferences" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog  modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel"><b></b>Preferences</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          
+            <div class="mb-3 row">
+                <label for="inputPassword" class="col-sm-2 col-form-label"><b></b>Work Type</label>
+                <div class="col-sm-10">  
+                    <select class="form-select" aria-label="Default select example">
+                        <option selected>Preferred work type</option>
+                        <option value="1">Part Time</option>
+                        <option value="2">Full Time</option>
+                        <option value="3">Other</option>
+                      </select>
+                </div>
+            </div>
+
+            <div class="mb-3 row">
+                <label for="inputPassword" class="col-sm-2 col-form-label"><b></b>Expected Salary</label>
+                <div class="col-sm-10">  
+                    <select class="form-select" aria-label="Default select example">
+                        <option selected>Expected salary</option>
+                        <option value="1">10,000 below</option>
+                        <option value="2">11,000 - 20,0000</option>
+                        <option value="3">21,000 - 40,0000</option>
+                        <option value="3">41,000 - 100,0000</option>
+                        <option value="3">100,000 above </option>
+                      </select>
+                      <div class="form-check form-check-inline mt-1">
+                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+                        <label class="form-check-label" for="inlineRadio1"><small>Monthly</small></label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                        <label class="form-check-label" for="inlineRadio2"><small>Yearly</small></label>
+                      </div>
+                </div>
+            </div>
+                  
+
+            <div class="mb-3 row">
+                <label for="inputPassword" class="col-sm-2 col-form-label"><b></b>Preferred Location</label>
+                <div class="col-sm-10">  
+                    <input class="form-control" type="text" placeholder="Your preferred location" aria-label="default input example">
+                </div>
+            </div>
+
+            <div class="mb-3 row">
+                <label for="inputPassword" class="col-sm-2 col-form-label"><b></b>Availability</label>
+                <div class="col-sm-10">  
+                    <select class="form-select" aria-label="Default select example">
+                        <option selected>Your available day to start</option>
+                        <option value="1">2 weeks</option>
+                        <option value="2">This weeks</option>
+                        <option value="3">Tomorrow</option>
+                        
+                      </select>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
+
+    {% block js %}
+    
+    <!-- Vendor JS Files -->
+    <script src="{{url_for('static',filename='assets/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+    <script src="{{url_for('static',filename='assets/vendor/glightbox/js/glightbox.min.js')}}"></script>
+    <script src="{{url_for('static',filename='assets/vendor/isotope-layout/isotope.pkgd.min.js')}}"></script>
+    <script src="{{url_for('static',filename='assets/vendor/swiper/swiper-bundle.min.js')}}"></script>
+
+    <!-- Template Main JS File -->
+    <script src="{{url_for('static',filename='assets/js/main.js')}}"></script>
+
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="{{url_for('static',filename='assets/js/jquery.js')}}"></script>
+
+    <script>
+        const editButton = document.getElementById('editButton');
+        const input1 = document.querySelectorAll('input');
+
+        const inputElement = document.getElementById("myInput");
+        const textareaElement = document.createElement("textarea");
+        textareaElement.value = inputElement.value;
+        inputElement.value = textareaElement.value; // Copy initial value
+        textareaElement.rows = 4; // Set desired rows
+        textareaElement.disabled = false;
+        textareaElement.style.width = "100%";
+        datalists = [input1.length];
+        const company1 = document.getElementById('company1');
+
+        let isEditing = false;
+        
+        editButton.addEventListener('click', () => {
+            if (isEditing) {
+                for (var i = 0;i < input1.length; i++){
+                // Save changes
+                
+                input1[i].style.border = "none";
+                
+                
+                input1[i].disabled = true;
+                
+                }
+                
+                textareaElement.disabled = true;
+                inputElement.value = textareaElement.value;
+
+                for (i = 0; i < input1.length; i++){
+                datalists[i] = input1[i].value;
+                }
+
+                fetch('/profiledata', { 
+                method: 'POST', 
+                headers: { 
+                    'Content-Type': 'application/json'
+                }, 
+                body: JSON.stringify({data: datalists}) 
+                }) 
+                .then(response => response.text()) 
+                .then(result => { 
+                console.log(result); 
+                }) 
+                .catch(error => { 
+                console.error('Error:', error); 
+                }); 
+
+                editButton.style.backgroundColor = "#198754";
+                editButton.textContent = 'Edit';
+                
+            } else {
+                // Enable editing
+
+                for (var i = 0; i < input1.length; i++){
+
+                input1[i].disabled = false;
+                input1[i].style.border = "2px solid red";
+                input1[i].style.borderRadius = "4px";
+                
+
+                if (i >= 7){
+                    break;
+                }
+
+                }
+                
+                inputElement.replaceWith(textareaElement);
+                textareaElement.disabled = false;
+                textareaElement.value = inputElement.value;
+                
+                editButton.style.backgroundColor = "#c6d352";
+                editButton.textContent = 'Save';
+            }
+            isEditing = !isEditing;
+
+            
+        });
+    </script>
+
+<script>
+    const editButton2 = document.getElementById('editButton2');
+    const phone = document.getElementById('phone');
+    const address = document.getElementById('address');
+
+    let isEditing2 = false;
+
+    editButton2.addEventListener('click', () => {
+        if (isEditing2) {
+            
+            phone.style.border = "none";
+            address.style.border = "none";
+            
+            phone.disabled = true;
+            address.disabled = true;
+
+            $.ajax({ 
+                  url: '/profiledata', 
+                  type: 'POST', 
+                  data: { 'phone': phone.value , 'address': address.value }, 
+                  success: function(response) { 
+                    console.log('Response from Flask:', response);
+                  }, 
+                  error: function(error) { 
+                      console.log(error); 
+                  } 
+                });
+
+            editButton2.style.backgroundColor = "#198754";
+            editButton2.textContent = 'Edit';
+
+        } else {
+            
+            phone.disabled = false;
+            phone.style.border = "2px solid red";
+            phone.style.borderRadius = "4px";
+
+            address.disabled = false;
+            address.style.border = "2px solid red";
+            address.style.borderRadius = "4px";
+
+            editButton2.style.backgroundColor = "#c6d352";
+            editButton2.textContent = 'Save';
+            
+        }
+        isEditing2 = !isEditing2;
+
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+    const editButton3 = document.getElementById('editButton3');
+    const worktype = document.getElementById('worktype');
+    const salary = document.getElementById('salary');
+    const selectedOption = document.querySelectorAll('input[name="salarytype"]');
+    const location = document.querySelector('#location');
+    const avail = document.getElementById('avail');
+    var optionvalue = '';
+    let RadioValue = '';
+
+    const datalists1 = [worktype,salary,location,avail]; 
+
+    let isEditing3 = false;
+
+    editButton3.addEventListener('click', () => {
+        if (isEditing3) {
+
+            for (i = 0; i < datalists1.length; i++){
+                datalists1[i].style.border = "1px solid #dee2e6";
+                datalists1[i].disabled = true;
+                
+            }
+
+            selectedOption.forEach((radio) => {
+            radio.style.border = "1px solid #dee2e6";
+            radio.disable = true;
+
+            if (radio.checked){
+                RadioValue = radio.value;
+            }
+            });
+
+            $.ajax({ 
+                  url: '/profiledata', 
+                  type: 'POST', 
+                  data: { 'worktype': worktype.value , 'salary': salary.value,'selectedOption': RadioValue, 'location': location.value, 'avail': avail.value }, 
+                  success: function(response) { 
+                    console.log('Response from Flask:', response);
+                  }, 
+                  error: function(error) { 
+                      console.log(error); 
+                  } 
+                }); 
+
+            editButton3.style.backgroundColor = "#198754";
+            editButton3.textContent = 'Edit';
+
+        } else {
+
+            for (i = 0; i < datalists1.length; i++){
+                datalists1[i].style.border = "2px solid red";
+                datalists1[i].disabled = false;
+            }
+
+            selectedOption.forEach((radio) => {
+            radio.style.border = "2px solid red";
+            radio.disabled = false;
+            
+            });
+
+            editButton3.style.backgroundColor = "#c6d352";
+            editButton3.textContent = 'Save';
+            
+        }
+        isEditing3 = !isEditing3;
+
+        optionValue = RadioValue;
+        
+    });
+
+});
+</script>
+
+<script>
+
+function standby() {
+    document.getElementById('defaultpic').src = "{{url_for('static',filename='assets/img/jobhubfavicon.jpg')}}";
+}
+</script>
+    
+    {% endblock %}

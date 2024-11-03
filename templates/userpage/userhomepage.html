@@ -1,0 +1,536 @@
+{% extends '/userpage/userbase.html' %}
+{% block homeactive %}<li><a href="{{url_for('user_homepage', page=0)}}" class="active">Home</a></li> {% endblock %}
+{% block vendor %} {% endblock %}
+{%block username %}<li><a href="#" style="font-size: 1rem; overflow: hidden; text-overflow: ellipsis;
+  max-width: 100%; white-space: nowrap;">Welcome, {{name}}!</a></li>{% endblock %}
+
+  {% block css %}
+  <!-- Vendor CSS Files -->
+  <link href="{{url_for('static',filename='assets/vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
+  <link href="{{url_for('static',filename='assets/vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
+  <link href="{{url_for('static',filename='assets/vendor/bootstrap-icons/bootstrap-icons.css')}}" rel="stylesheet">
+  <link href="{{url_for('static',filename='assets/vendor/boxicons/css/boxicons.min.css')}}" rel="stylesheet">
+  <link href="{{url_for('static',filename='assets/vendor/glightbox/css/glightbox.min.css')}}" rel="stylesheet">
+
+  <!--added links for search function-->
+  <link rel="stylesheet" href="{{url_for('static',filename='assets/css/linearicons.css')}}"> <!--linear icon css-->
+  <link rel="stylesheet" href="{{url_for('static',filename='assets/css/animate.css')}}"> <!--animate.css-->
+  <link rel="stylesheet" href="{{url_for('static',filename='assets/css/flaticon.css')}}"> <!--flaticon.css-->
+  <link rel="stylesheet" href="{{url_for('static',filename='assets/css/slick.css')}}"> <!--slick.css-->
+  <link rel="stylesheet" href="{{url_for('static',filename='assets/css/slick-theme.css')}}"> <!--slick.css-->
+
+  <!--ADDED LINKS FOR JOB LISTS-->
+  <link rel="stylesheet" href="{{url_for('static',filename='assets/css/linearicons.css')}}">
+  <link rel="stylesheet" href="{{url_for('static',filename='assets/css/categories/magnific-popup.css')}}">
+	<link rel="stylesheet" href="{{url_for('static',filename='assets/css/categories/nice-select.css')}}">
+	<link rel="stylesheet" href="{{url_for('static',filename='assets/css/categories/animate.min.css')}}">
+	<link rel="stylesheet" href="{{url_for('static',filename='assets/css/categories/owl.carousel.css')}}"> <!--end of added links-->
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+  
+  <!--end of search function css-->
+
+  <!-- Template Main CSS File -->
+  <link href="{{url_for('static',filename='assets/css/style.css')}}" rel="stylesheet">
+
+  <link rel="stylesheet" href="{{url_for('static',filename='assets/css/responsive.css')}}"> <!--responsive.css-->
+
+  <style>
+    .tags{
+      display: flex; 
+      justify-content: space-between; 
+      flex-wrap: wrap;
+    }
+
+    
+  </style>
+  
+</head>
+{% endblock %}
+
+
+    {% block content %}
+
+    <!-- Search Start -->
+    <div class="container-fluid mb-5 wow fadeIn userhomepagehero" id="#userhomepagehero" data-wow-delay="0.1s" style="padding: 35px; margin-top: 50px;">
+      <div class="container">
+
+        <div class="welcome-hero-serch-box">
+          <div class="welcome-hero-form">
+              <div class="single-welcome-hero-form" >
+                  <h3>what?</h3>
+                  <form action="{{url_for('user_homepage',page = 0)}}" method="POST">
+                    <input type="text" name="whattoinput" value="" style="box-shadow:none;outline:0!important;" style="margin-bottom: 150px;" placeholder="Job title, company, Job category, etc.">
+                  
+                  <div class="welcome-hero-form-icon">
+                      <i class="flaticon-list-with-dots"></i>
+                  </div>
+              </div>
+              <div class="single-welcome-hero-form">
+                  <h3>location</h3>
+                  
+                      <input type="text" name="loctoinput" value="" style="box-shadow:none;outline:0!important;" placeholder="Iloilo City, Jaro, Molo, etc." />
+                  
+                  <div class="welcome-hero-form-icon">
+                      <i class="flaticon-gps-fixed-indicator"></i>
+                  </div>
+              </div>
+          </div>
+          <div class="welcome-hero-serch" >
+            <input type="submit" class="welcome-hero-btn" value="Search" onclick="window.location.href='#'" style="box-shadow: none; outline: 0!important; border: 0; font-size: 12px;">
+                 
+          </input>
+          </div>
+        </form>
+      </div>
+          
+      </div>
+  </div>
+  <!-- Search End -->
+
+  {% if searches %}
+
+<!-- Start post Area -->
+<section class="post-area section-gap">
+  <div class="container">
+    <div class="row justify-content-center d-flex">
+      <div class="col-lg-8 post-list">
+
+        {% for jobs in searches %}
+
+        <div class="single-post d-flex flex-row">
+          <div class="thumb">
+            <img src="../static/assets/img/mini-jobhubicon.png" alt="" style="margin-right: 10px;">
+            <ul class="tags" style="display: flex; justify-content: space-between; flex-wrap: wrap;">
+              <li class="">
+                <a href="{{url_for('user_homepage',page = 0, c = jobs[2])}}">{{jobs[2]}}</a>
+              </li>
+            </ul>
+          </div>
+          <div class="details">
+            <div class="title d-flex flex-row justify-content-between">
+              <div class="titles">
+                <a href="{{url_for('userjobdetails', id = jobs[0])}}"><h4>{{jobs[3]}}</h4></a>
+                <h6>{{jobs[17]}}</h6>					
+              </div>
+                  {% if jobs[0] in saved %}
+                  <ul class="btns">
+                    <li class=" justify-content-end"><a href="#" class="myAnchor" data-userid="{{userid}}" data-jobId="{{jobs[0]}}" id="myAnchor"><span class=""><i class="bi bi-heart-fill" style="color: red;"></i></span></a></li>
+
+                    {% if appliedposts %}
+                    {% if jobs[0] in appliedposts %}
+                    <li class=" justify-content-end"><a href="{{url_for('userjobdetails', id = jobs[0])}}">Applied</a></li>
+                    {% else %}
+                    <li class=" justify-content-end"><a href="{{url_for('userjobdetails', id = jobs[0])}}">Apply</a></li>
+                    {% endif %}
+
+                    {% else %}
+
+                    <li class=" justify-content-end"><a href="{{url_for('userjobdetails', id = jobs[0])}}">Apply</a></li>
+                     {% endif %}
+
+                  </ul>
+
+                  {% else %}
+                  <ul class="btns">
+                    <li class=" justify-content-end"><a href="#" class="myAnchor" data-userid="{{userid}}" data-jobId="{{jobs[0]}}" id="myAnchor"><span class=""><i class="bi bi-heart" style="color: red;"></i></span></a></li>
+                    {% if appliedposts %}
+                    {% if jobs[0] in appliedposts %}
+                    <li class=" justify-content-end"><a href="{{url_for('userjobdetails', id = jobs[0])}}">Applied</a></li>
+                    {% else %}
+                    <li class=" justify-content-end"><a href="{{url_for('userjobdetails', id = jobs[0])}}">Apply</a></li>
+                    {% endif %}
+
+                    {% else %}
+
+                    <li class=" justify-content-end"><a href="{{url_for('userjobdetails', id = jobs[0])}}">Apply</a></li>
+                    
+                    {% endif %}
+                  </ul>
+
+                  {% endif %}
+            </div>
+            <div class="myAlert alert alert-info mt-3" id="myAlert{{jobs[0]}}" style="display: none;">
+              <!-- Message will be displayed here -->
+          </div>
+            <div class="col-lg-12">
+              <p style="display: -webkit-box;
+              -webkit-line-clamp: 4; width:100%; overflow: hidden; -webkit-box-orient: vertical; text-overflow: ellipsis;">
+              {{jobs[8]}}
+              </p>
+            </div>
+            <p>Job type: {{jobs[10]}}</p>
+            <p>Preferred level: {{jobs[11]}}</p>
+            <p class="address"><span class="lnr lnr-map"></span>{{jobs[12]}}</p>
+            <p class="address"><span class="lnr lnr-database"></span> ₱{{jobs[4]}} - ₱{{jobs[5]}}</p>
+          </div>
+        </div>
+
+        {% endfor %}
+
+  {% elif icr %}
+
+        <!-- Start post Area -->
+<section class="post-area section-gap">
+  <div class="container">
+    <div class="row justify-content-center d-flex">
+      <div class="col-lg-8 post-list">
+
+        {% for catresults in icr %}
+
+        <div class="single-post d-flex flex-row">
+          <div class="thumb">
+            <img src="../static/assets/img/employerprofilepic/{{catresults[25]}}" alt="" style="margin-right: 10px;">
+            <ul class="tags" style="display: flex; flex-wrap: wrap; ">
+              <li class="">
+                <a href="{{url_for('user_homepage',page = 0, c = catresults[2])}}">{{catresults[2]}}</a>
+              </li>
+            </ul>
+          </div>
+          <div class="details">
+            <div class="title d-flex flex-row justify-content-between">
+              <div class="titles">
+                <a href="{{url_for('userjobdetails', id = catresults[0])}}"><h4>{{catresults[3]}}</h4></a>
+                <h6>{{catresults[17]}}</h6>					
+              </div>
+                  {% if catresults[0] in saved %}
+                  <ul class="btns">
+                    <li class=" justify-content-end"><a href="#" class="myAnchor" data-userid="{{userid}}" data-jobId="{{catresults[0]}}" id="myAnchor"><span class=""><i class="bi bi-heart-fill" style="color: red;"></i></span></a></li>
+                    
+                    {% if appliedposts %}
+                    {% if catresults[0] in appliedposts %}
+                    <li class=" justify-content-end"><a href="{{url_for('userjobdetails', id = catresults[0])}}">Applied</a></li>
+                    {% else %}
+                    <li class=" justify-content-end"><a href="{{url_for('userjobdetails', id = catresults[0])}}">Apply</a></li>
+                    {% endif %}
+
+                    {% else %}
+
+                    <li class=" justify-content-end"><a href="{{url_for('userjobdetails', id = catresults[0])}}">Apply</a></li>
+                    
+                      {% endif %}
+                  </ul>
+
+                  {% else %}
+                  <ul class="btns">
+                    <li class=" justify-content-end"><a href="#" class="myAnchor" data-userid="{{userid}}" data-jobId="{{catresults[0]}}" id="myAnchor"><span class=""><i class="bi bi-heart" style="color: red;"></i></span></a></li>
+                    
+                    {% if appliedposts %}
+                    {% if catresults[0] in appliedposts %}
+                    <li class=" justify-content-end"><a href="{{url_for('userjobdetails', id = catresults[0])}}">Applied</a></li>
+                    {% else %}
+                    <li class=" justify-content-end"><a href="{{url_for('userjobdetails', id = catresults[0])}}">Apply</a></li>
+                    {% endif %}
+
+                    {% else %}
+
+                    <li class=" justify-content-end"><a href="{{url_for('userjobdetails', id = catresults[0])}}">Apply</a></li>
+
+                    {% endif %}
+
+                  </ul>
+
+                  {% endif %}
+            </div>
+            <div class="myAlert alert alert-info mt-3" id="myAlert{{catresults[0]}}" style="display: none;">
+              <!-- Message will be displayed here -->
+          </div>
+            <div class="col-lg-12">
+              <p style="display: -webkit-box;
+              -webkit-line-clamp: 4; width:100%; overflow: hidden; -webkit-box-orient: vertical; text-overflow: ellipsis;">
+              {{catresults[8]}}
+              </p>
+            </div>
+            <p>Job type: {{catresults[10]}}</p> 
+            <p>Preferred level: {{catresults[11]}}</p>
+            <p class="address"><span class="lnr lnr-map"></span>{{catresults[12]}}</p>
+            <p class="address"><span class="lnr lnr-database"></span> ₱{{catresults[4]}} - ₱{{catresults[5]}}</p>
+          </div>
+        </div>
+
+        {% endfor %}
+
+
+        {% else %}
+
+
+
+        
+    <!-- Start post Area -->
+<section class="post-area section-gap" >
+  <div class="container">
+
+
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <div class="alert border border-warning alert-dismissible fade show text-warning" role="alert">
+        <b>Uh-oh!</b> {{messages[0]}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+			</div>
+    {% endif %}
+    {% endwith %}
+
+    <div class="row justify-content-center d-flex">
+      <div class="col-lg-8 post-list">
+
+        {% for job in results %}
+        
+        <div class="single-post d-flex flex-row" >
+          <div class="thumb">
+            <img src="{{url_for('static',filename='assets/img/employerprofilepic/' + job[10])}}" alt="">
+            <ul class="tags">
+              <li class="">
+                <a href="{{url_for('user_homepage',page = 0, c = job[1])}}">{{ job[1] }}</a>
+                
+              </li>
+            </ul>
+          </div>
+          <div class="details">
+            <div class="title d-flex flex-row justify-content-between">
+                  <div class="titles">
+                    <a href="{{url_for('userjobdetails', id = job[8])}}"><h4>{{job[0]}}</h4></a>
+                    <a href="{{url_for('usercompanyprofile', id = job[9])}}"><h6>{{job[7]}}</h6></a>				
+                  </div>
+
+                  {% if job[8] in saved %}
+
+                  <ul class="btns">
+                    <li class=" justify-content-end"><a href="#" class="myAnchor" data-userid="{{userid}}" data-jobId="{{job[8]}}" id="myAnchor"><span class=""><i class="bi bi-heart-fill" style="color: red;"></i></span></a></li>
+
+                    {% if job[8] in appliedposts %}
+                    <li class=" justify-content-end"><a href="{{url_for('userjobdetails', id = job[8])}}">Applied</a></li>
+                    {% else %}
+                    <li class=" justify-content-end"><a href="{{url_for('userjobdetails', id = job[8])}}">Apply</a></li>
+                    {% endif %}
+                  </ul>
+
+                  {% else %}
+                  <ul class="btns">
+                    <li class=" justify-content-end"><a href="#" class="myAnchor" data-userid="{{userid}}" data-jobId="{{job[8]}}" id="myAnchor"><span class=""><i class="bi bi-heart" style="color: red;"></i></span></a></li>
+                    {% if job[8] in appliedposts %}
+                    <li class=" justify-content-end"><a href="{{url_for('userjobdetails', id = job[8])}}">Applied</a></li>
+                    {% else %}
+                    <li class=" justify-content-end"><a href="{{url_for('userjobdetails', id = job[8])}}">Apply</a></li>
+                    {% endif %}
+                  </ul>
+
+                  {% endif %}
+
+              <!--row end-->
+            </div>
+            <div class="myAlert alert alert-info mt-3" id="myAlert{{job[8]}}" style="display: none;">
+              <!-- Message will be displayed here -->
+          </div>
+          <span>
+            <p style="display: -webkit-box;
+            -webkit-line-clamp: 4; width:100%; overflow: hidden; -webkit-box-orient: vertical; text-overflow: ellipsis;">
+              {{job[2]}} <br>
+            </p>
+          </span>
+            <p>Job type: {{ job[3] }}</p>
+            <p>Preferred level: {{job[11]}}</p>
+            <p class="address"><span class="lnr lnr-map"></span>{{job[4]}}</p>
+            <p class="address"><span class="lnr lnr-database"></span> ₱{{job[5]}} - ₱{{job[6]}}</p>
+          </div>
+        </div>
+
+      {% endfor %}
+
+
+
+        {% if jobpage > 1 %}
+        <a href="{{ url_for('user_homepage', page = 0, pagesNum = jobpage - 1) }}">Previous</a>
+      {% endif %}
+      {% if jobpage < totalpage %}
+        <a href="{{ url_for('user_homepage', page = 0, pagesNum = jobpage + 1) }}">Next</a>
+      {% endif %}
+
+      
+
+      {% endif %}
+
+      </div>
+
+      <div class="col-lg-4 sidebar">
+        <div class="single-slidebar">
+          <h4>Jobs by Location</h4>
+          <ul class="cat-list">
+            {% set count = [] %}
+            {% for location in loclist %}
+            <li><a class="justify-content-between d-flex" href="{{url_for('user_homepage', page = 0,c = location[0])}}"><p>{{location[0]}}</p><span>{{locjobnum[count|length]}}</span></a></li>
+            
+            {% set __ = count.append(1) %}
+            {% endfor %}
+          </ul>
+        </div>
+
+        <div class="single-slidebar">
+          <h4>Top rated job posts</h4>
+          <div class="active-relatedjob-carusel">
+
+            {% for ratedjobs in ratedjob %}
+            <div class="single-rated">
+              <img class="img-fluid" src="../static/assets/img/employerprofilepic/{{ratedjobs[9]}}" alt="">
+              <a href="job-single.html"><h4>{{ratedjobs[1]}}</h4></a>
+              <h6>{{ratedjobs[2]}}</h6>
+              <p class="jobdescription">
+                {{ratedjobs[3]}}
+              </p>
+              <p>Job type: {{ratedjobs[4]}}</p>
+              <p class="address"><span class="lnr lnr-map"></span> {{ratedjobs[5]}}</p>
+              <p class="address"><span class="lnr lnr-database"></span> ₱{{ratedjobs[6]}} - ₱{{ratedjobs[7]}}</p>
+
+              {% if ratedjobs[0] in applied %}
+              <a href="{{url_for('userjobdetails', id = ratedjobs[0])}}" class="btns text-uppercase">Applied</a>
+              {% else %}
+              <a href="{{url_for('userjobdetails', id = ratedjobs[0])}}" class="btns text-uppercase">Apply job</a>
+              {% endif %}
+            </div>
+            
+
+            {% endfor %}
+            			
+          </div>
+        </div>							
+
+        <div class="single-slidebar">
+          <h4>Jobs by Category</h4>
+          <ul class="cat-list">
+
+            {% set count = [] %}
+            {% for categories in catlist1 %}
+            <li><a class="justify-content-between d-flex" href="{{url_for('user_homepage', page = 0, c = categories[0])}}"><p>{{categories[0]}}</p><span>{{jobnum[count|length]}}</span></a></li>
+
+            {% set __ = count.append(1) %}
+            {% endfor %}
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </div>	
+</section>
+
+{% endblock %}
+
+    
+{% block js %}
+    
+  <!-- Vendor JS Files -->
+  <script src="{{url_for('static',filename='assets/vendor/purecounter/purecounter_vanilla.js')}}"></script>
+  <script src="{{url_for('static',filename='assets/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+  <script src="{{url_for('static',filename='assets/vendor/glightbox/js/glightbox.min.js')}}"></script>
+  <script src="{{url_for('static',filename='assets/vendor/isotope-layout/isotope.pkgd.min.js')}}"></script>
+  <script src="{{url_for('static',filename='assets/vendor/swiper/swiper-bundle.min.js')}}"></script>
+
+  <!-- Template Main JS File -->
+  <script src="{{url_for('static',filename='assets/js/main.js')}}"></script>
+
+  <!--Added scripts for search function-->
+  <script src="{{url_for('static',filename='assets/js/jquery.js')}}"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script> <!--modernizr.min.js-->
+  <script src="{{url_for('static',filename='assets/js/feather.min.js')}}"></script> <!--feather.min.js-->
+	<script src="{{url_for('static',filename='assets/js/jquery.counterup.min.js')}}"></script> <!-- counter js -->
+	<script src="{{url_for('static',filename='assets/js/waypoints.min.js')}}"></script>
+  <script src="{{url_for('static',filename='assets/js/slick.min.js')}}"></script> <!--slick.min.js-->
+  <script src="{{url_for('static',filename='assets/js/custom.js')}}"></script> <!--Custom JS-->
+
+  <!--ADDED SCRIPTS for job lists-->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="{{url_for('static',filename='assets/js/categories/easing.min.js')}}"></script>		
+	<script src="{{url_for('static',filename='assets/js/categories/superfish.min.js')}}"></script>	
+	<script src="{{url_for('static',filename='assets/js/categories/jquery.ajaxchimp.min.js')}}"></script>
+	<script src="{{url_for('static',filename='assets/js/categories/jquery.magnific-popup.min.js')}}"></script>
+	<script src="{{url_for('static',filename='assets/js/categories/owl.carousel.min.js')}}"></script>	
+	<script src="{{url_for('static',filename='assets/js/categories/jquery.sticky.js')}}"></script>
+	<script src="{{url_for('static',filename='assets/js/categories/main.js')}}"></script>
+
+  <script>
+    $(document).ready(function() {
+        //all myanchor
+        $('.myAnchor').on('click', function(e) {
+            e.preventDefault(); // Prevent default link behavior
+            
+            const anchor = this;
+            const icon = anchor.querySelector('i');
+            const jobId = anchor.getAttribute('data-jobId');
+            const userId = anchor.getAttribute('data-userid');
+            const alertBox = document.getElementById('myAlert' + jobId);
+
+            const data =  [jobId, userId];
+            const senddata = data.toString();
+  
+            // Toggle icon class (plus to minus)
+            icon.classList.toggle('bi-heart');
+            icon.classList.toggle('bi-heart-fill');
+  
+            // Update the alert message
+            if (icon.classList.contains('bi-heart-fill')) {
+                alertBox.innerHTML = 'Job post saved!';
+  
+                $.ajax({ 
+                  url: '/bookmark', 
+                  type: 'POST', 
+                  data: { 'data': jobId, 'data2': userId }, 
+                  success: function(response) { 
+                    console.log('Response from Flask:', response);
+                  }, 
+                  error: function(error) { 
+                      console.log(error); 
+                  } 
+                }); 
+  
+  
+            } else {
+                alertBox.innerHTML = 'Job post unsaved.';
+
+                $.ajax({ 
+                  url: '/unbookmark', 
+                  type: 'POST', 
+                  data: { 'data': jobId, 'data2': userId }, 
+                  success: function(response) { 
+                    console.log('Response from Flask:', response);
+                  }, 
+                  error: function(error) { 
+                      console.log(error); 
+                  } 
+                }); 
+            }
+  
+            // Show/hide the alert 
+            alertBox.style.display = 'block';
+            setTimeout(() => {
+                alertBox.style.display = 'none';
+            }, 3000); // Hide after 3 seconds
+        });
+    });
+  </script>
+
+<script>
+  $(document).ready(function() {
+      let page = 1;
+
+      function loadData() {
+          $.post('/load_more', { page: page }, function(response) {
+              const data = response.data;
+              const hasMore = response.has_next;
+
+              // Append data to the container
+              // Example: $('#data-container').append(...);
+              $('#datacontainer').append('<p>' + data.title + '</p>');
+
+              if (hasMore) {
+                  page++; // Increment page for the next request
+              } else {
+                  $('#load-more').hide(); // Hide button when no more data
+              }
+          });
+      }
+
+      $('#load-more').click(loadData);
+      loadData(); // Initial load
+  });
+</script>
+    
+{% endblock %}
+

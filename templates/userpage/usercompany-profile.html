@@ -1,0 +1,618 @@
+{% extends '/userpage/userbase.html' %}
+{%block username %}<li><a href="#" style="font-size: 1rem; overflow: hidden; text-overflow: ellipsis;
+  max-width: 100%; white-space: nowrap;">Welcome, {{name}}!</a></li>{% endblock %}
+
+{% block css %}
+  <!-- Vendor CSS Files -->
+  <link href="{{url_for('static',filename='assets/vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
+  <link href="{{url_for('static',filename='assets/vendor/bootstrap-icons/bootstrap-icons.css')}}" rel="stylesheet">
+  <link href="{{url_for('static',filename='assets/vendor/boxicons/css/boxicons.min.css')}}" rel="stylesheet">
+  <link href="{{url_for('static',filename='assets/vendor/glightbox/css/glightbox.min.css')}}" rel="stylesheet">
+
+  <!--Icon Font Stylesheet-->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="stylesheet" href="{{url_for('static',filename='assets/css/linearicons.css')}}">
+
+  <!-- Template Main CSS File -->
+  <link href="{{url_for('static',filename='assets/css/style.css')}}" rel="stylesheet">
+  
+<style>
+  /*Nav Tabs & Pills */
+
+
+
+
+.nav-pills .nav-link {
+    border-radius: .25rem;
+    color: #223035;
+    font-size: 12px;
+    text-align: center;
+	letter-spacing: 1px;
+    font-weight: 600;
+    text-transform: uppercase;
+	margin: 3px;
+    padding: 12px 20px;
+	-webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease; 
+
+}
+
+.nav-pills .nav-link:hover {
+    background-color:#f4f5fa;
+}
+
+.nav-pills .nav-link i{
+	margin-right:2px;
+	font-weight: 600;
+}
+
+.top-icon.nav-pills .nav-link i{
+	margin: 0px;
+	font-weight: 500;
+	display: block;
+    font-size: 20px;
+    padding: 5px 0;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+    color: #fff;
+    background-color: #008cff;
+    box-shadow: 0 4px 20px 0 rgba(0,0,0,.14), 0 7px 10px -5px rgba(0, 140, 255, 0.5);
+}
+
+.nav-pills-success .nav-link.active, .nav-pills-success .show>.nav-link {
+    color: #fff;
+    background-color: #15ca20;
+    box-shadow: 0 4px 20px 0 rgba(0,0,0,.14), 0 7px 10px -5px rgba(21, 202, 32, .5);
+}
+
+.nav-pills-info .nav-link.active, .nav-pills-info .show>.nav-link {
+    color: #fff;
+    background-color: #0dceec;
+    box-shadow: 0 4px 20px 0 rgba(0,0,0,.14), 0 7px 10px -5px rgba(13, 206, 236, 0.5);
+}
+
+.nav-pills-danger .nav-link.active, .nav-pills-danger .show>.nav-link{
+    color: #fff;
+    background-color: #fd3550;
+    box-shadow: 0 4px 20px 0 rgba(0,0,0,.14), 0 7px 10px -5px rgba(253, 53, 80, .5);
+}
+
+.nav-pills-warning .nav-link.active, .nav-pills-warning .show>.nav-link {
+    color: #fff;
+    background-color: #ff9700;
+    box-shadow: 0 4px 20px 0 rgba(0,0,0,.14), 0 7px 10px -5px rgba(255, 151, 0, .5);
+}
+
+.nav-pills-dark .nav-link.active, .nav-pills-dark .show>.nav-link {
+    color: #fff;
+    background-color: #223035;
+    box-shadow: 0 4px 20px 0 rgba(0,0,0,.14), 0 7px 10px -5px rgba(34, 48, 53, .5);
+}
+
+.nav-pills-secondary .nav-link.active, .nav-pills-secondary .show>.nav-link {
+    color: #fff;
+    background-color: #75808a;
+    box-shadow: 0 4px 20px 0 rgba(0,0,0,.14), 0 7px 10px -5px rgba(117, 128, 138, .5);
+}
+.card .tab-content{
+	padding: 1rem 0 0 0;
+}
+
+.z-depth-3 {
+    -webkit-box-shadow: 0 11px 7px 0 rgba(0,0,0,0.19),0 13px 25px 0 rgba(0,0,0,0.3);
+    box-shadow: 0 11px 7px 0 rgba(0,0,0,0.19),0 13px 25px 0 rgba(0,0,0,0.3);
+}
+
+.fa.fa-star{
+    color: yellow;
+}
+
+.g-height-50 {
+    height: 50px;
+}
+
+.g-width-50 {
+    width: 50px !important;
+}
+
+@media (min-width: 0){
+    .g-pa-30 {
+        padding: 2.14286rem !important;
+    }
+}
+
+.g-bg-secondary {
+    background-color: #fafafa !important;
+}
+
+.u-shadow-v18 {
+    box-shadow: 0 5px 10px -6px rgba(0, 0, 0, 0.15);
+}
+
+.g-color-gray-dark-v4 {
+    color: #777 !important;
+}
+
+.g-font-size-12 {
+    font-size: 0.85714rem !important;
+}
+
+.media-comment {
+    margin-top:20px
+}
+
+
+
+
+</style>
+</head>
+
+{% endblock %}
+
+
+
+  {% block content %}
+
+  {% for company in result %}
+    <div class="container pt-5 pb-0 mb-0 mt-5">
+      <div class="row d-flex justify-content-center align-items-center">
+        <div class="col-md-12 col-lg-12 col-xl-12">
+  
+          <div class="card" style="border-radius: 15px; background-color: #b7ebc8;">
+            <div class="card-body text-center">
+              <div class="mt-3 mb-4">
+                <img src="{{url_for('static',filename='assets/img/employerprofilepic/' + company[10])}}"
+                  class="rounded-circle img-fluid" style="width: 100px;" />
+              </div>
+              <h4 class="mb-2">{{company[2]}}</h4>
+              
+              
+                {% if profile %}
+                <div></div>
+                {% else %}
+                <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#writereview">Write a review</button>
+                {% endif %}
+            </div>
+          </div>
+  
+        </div>
+      </div>
+    </div>
+ 
+  <div class="container mb-3 mt-3">
+    <div class="col-lg-12">
+      <div class="card z-depth-3 mb-4" style="border-radius: 15px;">
+       <div class="card-body">
+       <ul class="nav nav-pills nav-pills-primary nav-justified">
+           <li class="nav-item">
+               <a href="#profile" data-bs-target="#profile" data-bs-toggle="pill" role="tab" class="nav-link active show">About</a>
+           </li>
+           <li class="nav-item">
+               <a href="#messages" data-bs-target="#messages" data-bs-toggle="pill" class="nav-link">Jobs</a>
+           </li>
+           <li class="nav-item">
+               <a href="#edit" data-bs-target="#edit" id="tabedit" data-bs-toggle="pill" class="nav-link">Reviews</a>
+           </li>
+       </ul>
+       <div class="tab-content p-3">
+           <div class="tab-pane active show" id="profile" role="tabpanel">
+            <div class="col-lg-12 mb-4 mb-sm-5">
+                <div>
+                    <span class="section-title text-primary mb-3 mb-sm-4">Company overview</span>
+                    <div class="row">
+                        <div class="col-sm-3 col-md-6 mt-3">
+                          <h6 class="mb-0">Website</h6>
+                        </div>
+                        <div class="col-sm-9 col-md-6 text-secondary">
+                          {{company[4]}}
+                        </div>
+                      </div>
+                      <hr>
+                      <div class="row">
+                        <div class="col-sm-3 col-md-6">
+                          <h6 class="mb-0">Industry</h6>
+                        </div>
+                        <div class="col-sm-9 col-md-6 text-secondary">
+                          {{company[5]}}
+                        </div>
+                      </div>
+                      <hr>
+                      <div class="row">
+                        <div class="col-sm-3 col-md-6">
+                          <h6 class="mb-0">Company size</h6>
+                        </div>
+                        <div class="col-sm-9 col-md-6 text-secondary">
+                          {{company[8]}}
+                        </div>
+                      </div>
+                      <hr>
+                      <div class="row">
+                        <div class="col-sm-3 col-md-6">
+                          <h6 class="mb-0">Specialties</h6>
+                        </div>
+                        <div class="col-sm-9 col-md-6 text-secondary">
+                          {{company[7]}}
+                        </div>
+                      </div>
+                      <hr>
+                      <div class="row">
+                        <div class="col-sm-3 col-md-6">
+                          <h6 class="mb-0">Location</h6>
+                        </div>
+                        <div class="col-sm-9 col-md-6 text-secondary">
+                          {{company[6]}}
+                        </div>
+                      </div>
+                    
+                </div>
+            </div>
+            <div class="col-lg-12 mb-4 mb-sm-5">
+                <div>
+                    <span class="section-title text-primary mb-3 mb-sm-4">Introduction</span>
+                    <p class="mb-0" id="intro" style="white-space: pre-line;">{{company[9]}}</p>
+                </div>
+                <script>
+                  const originalText = "{{company[9]}}"; // Replace with actual text
+                  const formattedText = originalText.replace(/\\n/g, "<br>");
+                  document.getElementById("intro").innerHTML = formattedText;
+                </script>
+            </div>
+            <div class="col-lg-12 mb-4 mb-sm-5">
+                <!--<div>
+                    <span class="section-title text-primary mb-3 mb-sm-4">Reviews</span>
+                    <p>Edith is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+                    <p class="mb-0">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed.</p>
+                </div>-->
+            </div>
+
+            {% endfor %}
+            
+               <!--/row-->
+           </div>
+          
+           <div class="tab-pane" id="messages">
+            <div class="col-lg-12 post-list">
+                {% for jd in compjobs %}
+                <div class="single-post d-flex flex-row">
+                  <div class="thumb">
+                    <img src="{{url_for('static',filename='assets/img/employerprofilepic/' + jd[10])}}" alt="" style="margin-right: 10px;">
+                    <ul class="tags">
+                      <li class="">
+                        <a href="{{url_for('user_homepage', page = 0, c = jd[3])}}">{{jd[3]}}</a>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="details">
+                    <div class="title d-flex flex-row justify-content-between">
+                      <div class="titles">
+                        <a href="{{url_for('userjobdetails', id = jd[0])}}"><h4>{{jd[1]}}</h4></a>
+                        <h6>{{jd[2]}}</h6>	
+                      </div>
+                      <ul class="btns">
+
+                        {% if jd[0] in saved %}
+                    <ul class="btns">
+                    <li class=" justify-content-end"><a href="#" class="myAnchor" data-userid="{{userid}}" data-jobId="{{jd[0]}}" id="myAnchor"><span class=""><i class="bi bi-heart-fill" style="color: red;"></i></span></a></li>
+                    
+                    {% if jd[0] in appliedposts %}
+                    <li class=" justify-content-end"><a href="{{url_for('userjobdetails', id = jd[0])}}">Applied</a></li>
+                    {% else %}
+                    <li class=" justify-content-end"><a href="{{url_for('userjobdetails', id = jd[0])}}">Apply</a></li>
+                    {% endif %}
+
+                    </ul>
+
+                    {% else %}
+                    <ul class="btns">
+                        <li class=" justify-content-end"><a href="#" class="myAnchor" data-userid="{{userid}}" data-jobId="{{jd[0]}}" id="myAnchor"><span class=""><i class="bi bi-heart" style="color: red;"></i></span></a></li>
+                        {% if jd[0] in appliedposts %}
+                        <li class=" justify-content-end"><a href="{{url_for('userjobdetails', id = jd[0])}}">Applied</a></li>
+                        {% else %}
+                        <li class=" justify-content-end"><a href="{{url_for('userjobdetails', id = jd[0])}}">Apply</a></li>
+                        {% endif %}
+
+                    </ul>
+
+                    {% endif %}
+
+                      </ul>
+                    </div>
+                    <div class="myAlert alert alert-info mt-3" id="myAlert{{jd[0]}}" style="display: none;">
+                        <!-- Message will be displayed here -->
+                    </div>
+
+                    <p>
+                      {{jd[4]}}
+                    </p>
+                    <p>Job type: {{jd[5]}}</p>
+                    <p class="address"><span class="lnr lnr-map"></span>{{jd[6]}}</p>
+                    <p class="address"><span class="lnr lnr-database"></span>₱{{jd[7]}} - ₱{{jd[8]}}</p>
+                  </div>
+                </div>
+                {% endfor %}
+                </div>
+           </div>
+           <div class="tab-pane" id="edit">
+
+            <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                  {% if profile %}
+
+                  {% for user in profile %}
+
+                  <div class="media g-mb-30 media-comment">
+                    <img class="d-flex g-width-50 g-height-50 rounded-circle g-mt-3 g-mr-15" src="{{url_for('static',filename='assets/img/userprofilepic/' + user[1])}}" alt="Image Description">
+                    <div class="media-body u-shadow-v18 g-pa-30" style="background-color:#008cff; border-radius: 12px;">
+                      <div class="g-mb-15">
+                        <small>Your comment:</small> &nbsp; <button class="btn btn-primary btn-sm mx-1" data-bs-toggle="modal" data-bs-target="#editreviewmodal"><i class="bi bi-pencil"></i> </button><a href="{{url_for('deletereview', companyid = companyid, reviewid = user[4])}}"><button class="btn btn-danger btn-sm mx-1"><i class="bi bi-trash"></i> </button></a>
+                        <h5 class="h5 g-color-gray-dark-v1 mb-0">{{user[2]}}</h5>
+                        
+                      </div>
+                
+                      <p>{{user[3]}}</p>
+                
+                      <ul class="list-inline d-sm-flex my-0">
+
+                        
+                      </ul>
+                    </div>
+                </div>
+
+                                <!-- Modal -->
+                <div class="modal fade" id="editreviewmodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered modal-lg">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+
+
+                        <div class="media g-mb-30 media-comment">
+                          <img class="d-flex g-width-50 g-height-50 rounded-circle g-mt-3 g-mr-15" src="{{url_for('static',filename='assets/img/userprofilepic/' + user[1])}}" alt="Image Description">
+                          <div class="media-body u-shadow-v18 g-pa-30" style="background-color:#fff; border-radius: 12px;">
+                            <div class="g-mb-15">
+                              <small>Your comment:</small> &nbsp;
+                              <h5 class="h5 g-color-gray-dark-v1 mb-0">{{user[2]}}</h5>
+                              
+                            </div>
+                      
+                            <div class="col-md-12">
+                              <form action="{{url_for('editreview', reviewid = user[4], companyid = companyid)}}" method="POST">
+                                <div class="mt-3 d-flex flex-row align-items-center p-3 form-color">  <textarea type="text" class="form-control" name="editcomment" placeholder="">{{user[3]}}</textarea><button type="submit" class="btn btn-primary"><i class="bi bi-send"></i></button> </div>
+                              
+                              </form>
+                            </div>
+
+                            
+                      
+                            
+                          </div>
+                      </div>
+
+
+                      </div>
+                      
+                    </div>
+                  </div>
+                </div>
+
+
+                
+
+                {% endfor %}
+
+                {% else %}
+                <div></div>
+                {% endif %}
+
+                {% if reviews %}
+
+                  {% for user in reviews %}
+                  
+                    <div class="media g-mb-30 media-comment" style="overflow: scroll;">
+                        <img class="d-flex g-width-50 g-height-50 rounded-circle g-mt-3 g-mr-15" src="{{url_for('static',filename='assets/img/userprofilepic/' + user[1])}}" alt="Image Description">
+                        <div class="media-body u-shadow-v18 g-bg-secondary g-pa-30">
+                          <div class="g-mb-15">
+                            <h5 class="h5 g-color-gray-dark-v1 mb-0">{{user[0]}}</h5>
+                            
+                          </div>
+                    
+                          <p>{{user[2]}}</p>
+                    
+                        </div>
+                    </div>
+
+                    {% endfor %}
+                </div>
+
+                {% if profile %}
+                <div> </div>
+
+                {% else %}
+                
+                <div class="col-md-12">
+                  <form action="{{url_for('reviewprocessing', companyid = companyid, alumniid = alumniid)}}" method="POST">
+                    <div class="mt-3 d-flex flex-row align-items-center p-3 form-color">  <textarea type="text" class="form-control" name="comment" placeholder="Enter your comment..."></textarea><input type="submit" class="btn btn-primary m-2" value="Send"></input> </div>
+                  
+                  </form>
+                </div>
+
+                {% endif %}
+
+                {% else %}
+
+                <div> 
+                  <h2>No reviews yet. </h2>
+                </div>
+
+                <div class="col-md-12">
+                  <form action="{{url_for('reviewprocessing', companyid = companyid, alumniid = alumniid)}}" method="POST">
+                    <div class="mt-3 d-flex flex-row align-items-center p-3 form-color"> <textarea type="text" class="form-control" name="comment" placeholder="Send the first review..."></textarea><input type="submit" class="btn btn-primary m-2" value="Send"></input> </div>
+                  
+                  </form>
+                </div>
+
+                {% endif %}
+            
+        </div>
+        </div>
+
+           </div>
+       </div>
+   </div>
+ </div>
+ </div>
+
+ <!-- Modal -->
+<div class="modal fade" id="writereview" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+  <div class="modal-content">
+      <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">Add a review: </h5>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <form action="{{url_for('reviewprocessing', companyid = companyid, alumniid = alumniid)}}" method="POST">
+
+        <div class="col-12 mb-3">
+          <textarea type="text" name="comment" class="form-control" rows="3" id="inputAddress" placeholder="Write your comment." required></textarea>
+        </div>
+          
+      </div>
+      <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      <input type="submit" class="btn btn-primary" value="Post your review!"></input>
+
+
+      </form>
+      
+      </div>
+  </div>
+  </div>
+</div>
+
+
+<!-- END OF MODAL-->
+
+ </div>
+
+ {% endblock %}
+
+
+    {% block js %}
+
+    <!-- Vendor JS Files -->
+    <script src="{{url_for('static',filename='assets/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+    <script src="{{url_for('static',filename='assets/js/jquery.js')}}"></script>
+    
+    <script src="{{url_for('static',filename='assets/vendor/glightbox/js/glightbox.min.js')}}"></script>
+    <script src="{{url_for('static',filename='assets/vendor/isotope-layout/isotope.pkgd.min.js')}}"></script>
+    <script src="{{url_for('static',filename='assets/vendor/swiper/swiper-bundle.min.js')}}"></script>
+
+    <!-- Template Main JS File -->
+    <script src="{{url_for('static',filename='assets/js/main.js')}}"></script>
+
+    <script>
+        // Get all bookmark buttons
+        const bookmarkButtons = document.querySelectorAll('.bookmark-button');
+    
+        // Add a click event listener to each button
+        bookmarkButtons.forEach(bookmarkButtons => {
+            bookmarkButtons.addEventListener('click', function() {
+                // Get the job URL from the data-url attribute
+                const jobUrl = this.getAttribute('data-url');
+    
+                // Send an AJAX request to your Flask route to save the bookmark
+                // Replace '/bookmark' with your actual route
+                fetch('/bookmark', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ url: jobUrl }) // Send the job URL
+                })
+                .then(response => {
+                    if (response.ok) {
+                        console.log('Job bookmarked successfully!');
+                    } else {
+                        console.error('Error bookmarking job.');
+                    }
+                })
+                .catch(error => {
+                    console.error('An error occurred:', error);
+                });
+            });
+        });
+    </script>
+
+<script>
+    $(document).ready(function() {
+        //all myanchor
+        $('.myAnchor').on('click', function(e) {
+            e.preventDefault(); // Prevent default link behavior
+  
+            
+            const anchor = this;
+            const icon = anchor.querySelector('i');
+            const jobId = anchor.getAttribute('data-jobId');
+            const userId = anchor.getAttribute('data-userid');
+            const alertBox = document.getElementById('myAlert' + jobId);
+
+            const data =  [jobId, userId];
+            const senddata = data.toString();
+  
+            // Toggle icon class (plus to minus)
+            icon.classList.toggle('bi-heart');
+            icon.classList.toggle('bi-heart-fill');
+  
+            // Update the alert message
+            if (icon.classList.contains('bi-heart-fill')) {
+                alertBox.innerHTML = 'Job post saved!';
+  
+                
+                $.ajax({ 
+                  url: '/bookmark', 
+                  type: 'POST', 
+                  data: { 'data': jobId, 'data2': userId }, 
+                  success: function(response) { 
+                    console.log('Response from Flask:', response);
+                  }, 
+                  error: function(error) { 
+                      console.log(error); 
+                  } 
+                }); 
+  
+  
+            } else {
+                alertBox.innerHTML = 'Job post unsaved.';
+
+                $.ajax({ 
+                  url: '/unbookmark', 
+                  type: 'POST', 
+                  data: { 'data': jobId, 'data2': userId }, 
+                  success: function(response) { 
+                    console.log('Response from Flask:', response);
+                  }, 
+                  error: function(error) { 
+                      console.log(error); 
+                  } 
+                }); 
+            }
+  
+            // Show/hide the alert 
+            alertBox.style.display = 'block';
+            setTimeout(() => {
+                alertBox.style.display = 'none';
+            }, 3000); // Hide after 3 seconds
+        });
+    });
+  </script>
+
+{% endblock %}

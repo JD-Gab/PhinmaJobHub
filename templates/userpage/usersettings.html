@@ -1,0 +1,395 @@
+{% extends '/userpage/userbase.html' %}
+{%block username %}<li><a href="#" style="font-size: 1rem; overflow: hidden; text-overflow: ellipsis;
+  max-width: 100%; white-space: nowrap;">Welcome, {{name}}!</a></li>{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>PHINMA JOB HUB</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="{{url_for('static',filename='assets/img/jobhubfavicon.jpg')}}" rel="icon">
+  <link href="{{url_for('static',filename='assets/img/apple-touch-icon.png')}}" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="{{url_for('static',filename='assets/vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
+  <link href="{{url_for('static',filename='assets/vendor/bootstrap-icons/bootstrap-icons.css')}}" rel="stylesheet">
+  <link href="{{url_for('static',filename='assets/vendor/boxicons/css/boxicons.min.css')}}" rel="stylesheet">
+  <link href="{{url_for('static',filename='assets/vendor/glightbox/css/glightbox.min.css')}}" rel="stylesheet">
+  <link href="{{url_for('static',filename='assets/vendor/swiper/swiper-bundle.min.css')}}" rel="stylesheet">
+
+  {% block css %}
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+
+  
+  <!--end of search function css-->
+
+  <!-- Template Main CSS File -->
+  <link href="{{url_for('static',filename='assets/css/style.css')}}" rel="stylesheet">
+
+  <style>
+    body{
+    margin-top:20px;
+    color: #1a202c;
+    text-align: left;
+    background-color: #e2e8f0;    
+}
+.main-body {
+    padding: 15px;
+}
+
+.nav-link {
+    color: #4a5568;
+}
+.card {
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.06);
+}
+
+.nav .feather{
+  margin-right: 12px;
+}
+
+.card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #b7ebc8;
+    background-clip: border-box;
+    border: 0 solid rgba(0,0,0,.125);
+    border-radius: .25rem;
+}
+
+.card-body {
+    flex: 1 1 auto;
+    min-height: 1px;
+    padding: 1rem;
+}
+
+.gutters-sm {
+    margin-right: -8px;
+    margin-left: -8px;
+}
+
+.gutters-sm>.col, .gutters-sm>[class*=col-] {
+    padding-right: 8px;
+    padding-left: 8px;
+}
+.mb-3, .my-3 {
+    margin-bottom: 1rem!important;
+}
+
+.bg-gray-300 {
+    background-color: #e2e8f0;
+}
+.h-100 {
+    height: 100%!important;
+}
+.shadow-none {
+    box-shadow: none!important;
+}
+
+input .form-check-input{
+    border-radius: 20px;
+}
+  </style>
+  
+</head>
+{% endblock %}
+
+    {% block content %}
+
+    {% for data in settings %}
+<section>
+
+    <div class="container">
+
+        <!-- Breadcrumb -->
+        <nav aria-label="breadcrumb" class="main-breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{('userhomepage')}}">Home</a></li>
+            <li class="breadcrumb-item" style="color: #000;">User</li>
+            <li class="breadcrumb-item" aria-current="page" style="color: #000;">Settings</li>
+          </ol>
+        </nav>
+        <!-- /Breadcrumb -->
+  
+        <div class="row gutters-sm">
+          <div class="col-md-4 d-none d-md-block">
+            <div class="card" style="border-radius: 10px;">
+              <div class="card-body tabs">
+                <nav class="nav flex-column nav-pills nav-gap-y-1 tab-links">
+                  <a href="#profile" data-toggle="tab" class="nav-item nav-link has-icon nav-link-faded active">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user mr-2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>Profile Information
+                  </a>
+                  <a href="#account" data-toggle="tab" class="nav-item nav-link has-icon nav-link-faded">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-settings mr-2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>Account Settings
+                  </a>
+                  <a href="#security" data-toggle="tab" class="nav-item nav-link has-icon nav-link-faded">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shield mr-2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>Security
+                  </a>
+                  <!--<a href="#notification" data-toggle="tab" class="nav-item nav-link has-icon nav-link-faded">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bell mr-2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>Notification
+                  </a>-->
+                  <!--<a href="#billing" data-toggle="tab" class="nav-item nav-link has-icon nav-link-faded">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-credit-card mr-2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>Billing
+                  </a>-->
+                </nav>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-8">
+            <div class="card">
+              <div class="card-header border-bottom mb-3 d-flex d-md-none">
+                <ul class="nav nav-tabs card-header-tabs nav-gap-x-1" role="tablist">
+                  <li class="nav-item">
+                    <a href="#profile" data-toggle="tab" class="nav-link has-icon active"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="#account" data-toggle="tab" class="nav-link has-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-settings"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="#security" data-toggle="tab" class="nav-link has-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shield"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg></a>
+                  </li>
+                  <!--<li class="nav-item">
+                    <a href="#notification" data-toggle="tab" class="nav-link has-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bell"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg></a>
+                  </li>
+                  --<li class="nav-item">
+                    <a href="#billing" data-toggle="tab" class="nav-link has-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-credit-card"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg></a>
+                  </li>-->
+                </ul>
+              </div>
+              <div class="card-body tab-content">
+                <div class="tab-pane {{active[0]}}" id="profile">
+                  <h6>YOUR PROFILE INFORMATION</h6>
+                  <hr>
+                  <form action="{{url_for('settingsupdate', action = 'update')}}" method="POST">
+                    <div class="form-group">
+                      <label for="fullName">Full Name</label>
+                      <input type="text" class="form-control" id="fullName" name="fullname" aria-describedby="fullNameHelp" placeholder="" value="{{data[0]}}">
+                      <small id="fullNameHelp" class="form-text text-muted">Your name may appear around here where you are mentioned. You can change or remove it at any time.</small>
+                    </div>
+                    <!--<div class="form-group">
+                      <label for="bio">Your Bio</label>
+                      <textarea class="form-control autosize" id="bio" placeholder="Write something about you" style="overflow: hidden; overflow-wrap: break-word; resize: none; height: 62px;">A front-end developer that focus more on user interface design, a web interface wizard, a connector of awesomeness.</textarea>
+                    </div>-->
+                    <div class="form-group">
+                      <label for="url">Email</label>
+                      <input type="text" class="form-control" name="email" id="url" placeholder="" value="{{data[1]}}">
+                    </div>
+                    <div class="form-group">
+                      <label for="location">Address</label>
+                      <input type="text" class="form-control" name="address" id="location" placeholder="" value="{{data[2]}}">
+                    </div>
+                    <div class="form-group small text-muted">
+                      All of the fields on this page are optional and can be deleted at any time, and by filling them out, you're giving us consent to share this data wherever your user profile appears.
+                    </div>
+                    <input type="submit" class="btn btn-primary" value="Update Profile"></input>
+                    
+                  </form>
+                </div>
+                <div class="tab-pane" id="account">
+                  <h6>ACCOUNT SETTINGS</h6>
+                  <hr>
+                  <!--<form action="{{url_for('settingsupdate')}}" method="POST">
+                    <div class="form-group">
+                      <label for="username">Username</label>
+                      <input type="text" class="form-control" id="username" aria-describedby="usernameHelp" placeholder="Enter your username" value="{{data[3]}}">
+                      <small id="usernameHelp" class="form-text text-muted">After changing your username, your old username becomes available for anyone else to claim.</small>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Update Profile</button>
+                  </form>-->
+                    <hr>
+                    <div class="form-group">
+                      <label class="d-block text-danger">Delete Account</label>
+                      <p class="text-muted font-size-sm">Once you delete your account, there is no going back. Please be certain.</p>
+                    </div>
+                  <form>
+                  <button class="btn btn-danger" type="submit" data-bs-toggle="modal" data-bs-target="#deleteaccount">Delete Account</button>
+                </form>
+                </div>
+                <div class="tab-pane {{active[1]}}" id="security">
+                  <h6>SECURITY SETTINGS</h6>
+                  {% with messages = get_flashed_messages() %}
+                  {% if messages %}
+                  <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                  <strong>Process update: </strong> {{messages[0]}}
+                  </div>
+                  {% endif %}
+                  {% endwith %}
+                  <hr>
+                  <form action="{{url_for('settingsupdate', action = 'update_pass')}}" method="POST">
+                    <div class="form-group">
+                      <label class="d-block">Change Password</label>
+                      <input type="password" name="oldpass" class="form-control" placeholder="Enter your old password" required>
+                      <input type="password" name="newpass" class="form-control mt-1" placeholder="New password" required>
+                      <input type="password" name="verifynewpass" class="form-control mt-1" placeholder="Confirm new password" required>
+                    </div>
+                    
+                    <div class="col-lg-4">
+                      <input class="btn btn-primary" type="submit" id="passbtn" value="Change" style="width: 100%; font-weight:bold; color: #fff;">
+                      
+                    </div>
+                  </form>
+                  <hr>
+                  <form>
+                    <div class="form-group">
+                      <!--<label class="d-block">Two Factor Authentication</label>
+                      <button class="btn btn-success" type="button">Enable two-factor authentication</button>
+                      <p class="small text-muted mt-2">Two-factor authentication adds an additional layer of security to your account by requiring more than just a password to log in.</p>
+                    -->
+                    </div>
+                  </form>
+                  <hr>
+                  <form>
+                    <!--<div class="form-group mb-0">
+                      <label class="d-block">Sessions</label>
+                      <p class="font-size-sm text-secondary">This is a list of devices that have logged into your account. Revoke any sessions that you do not recognize.</p>
+                      <ul class="list-group list-group-sm">
+                        <li class="list-group-item has-icon">
+                          <div>
+                            <h6 class="mb-0">San Francisco City 190.24.335.55</h6>
+                            <small class="text-muted">Your current session seen in United States</small>
+                          </div>
+                          <button class="btn btn-light btn-sm ml-auto" type="button">More info</button>
+                        </li>
+                      </ul>
+                    </div>-->
+                  </form>
+                </div>
+                <div class="tab-pane" id="notification">
+                  <h6>NOTIFICATION SETTINGS</h6>
+                  <hr>
+                  <form>
+                    <div class="form-group">
+                      <label class="d-block mb-0">Security Alerts</label>
+                      <div class="small text-muted mb-3">Receive security alert notifications via email</div>
+                      <div class="form-check form-switch">
+                        <input type="checkbox" class="form-check-input" id="customCheck1" checked="" style="width: 40px;">
+                        <label class="form-check-label" for="customCheck1">Email each time a vulnerability is found</label>
+                      </div>
+                      <div class="form-check form-switch">
+                        <input type="checkbox" class="form-check-input" id="customCheck2" checked="">
+                        <label class="custom-control-label" for="customCheck2">Email a digest summary of vulnerability</label>
+                      </div>
+                    </div>
+                    <div class="form-group mb-0">
+                      <label class="d-block"> Notifications</label>
+                      <ul class="list-group list-group-sm">
+                        <!--<li class="list-group-item has-icon">
+                          Comments
+                          <div class="form-check form-switch ml-auto">
+                            <input type="checkbox" class="form-check-input" id="customSwitch1" checked="">
+                            <label class="form-check-label" for="customSwitch1"></label>
+                          </div>
+                        </li>
+                        <!-<li class="list-group-item has-icon">
+                          Updates From People
+                          <div class="form-check form-switch ml-auto">
+                            <input type="checkbox" class="form-check-input" id="customSwitch2">
+                            <label class="form-check-label" for="customSwitch2"></label>
+                          </div>
+                        </li>-->
+                        <li class="list-group-item has-icon">
+                          Reminders
+                          <div class="form-check form-switch ml-auto">
+                            <input type="checkbox" class="form-check-input" id="customSwitch3" checked="">
+                            <label class="form-check-label" for="customSwitch3"></label>
+                          </div>
+                        </li>
+                        <!--<li class="list-group-item has-icon">
+                          Events
+                          <div class="form-check form-switch ml-auto">
+                            <input type="checkbox" class="form-check-input" id="customSwitch4" checked="">
+                            <label class="form-check-label" for="customSwitch4"></label>
+                          </div>
+                        </li>
+                        <!-<li class="list-group-item has-icon">
+                          Pages You Follow
+                          <div class="form-check form-switch ml-auto">
+                            <input type="checkbox" class="form-check-input" id="customSwitch5">
+                            <label class="form-check-label" for="customSwitch5"></label>
+                          </div>
+                        </li>-->
+                      </ul>
+                    </div>
+                  </form>
+                </div>
+                
+              </div>
+            </div>
+          </div>
+        </div>
+  
+      </div>
+
+      <!-- Modal for deleting -->
+<div class="modal fade" id="deleteaccount" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+  <div class="modal-content">
+      <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">Delete account</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <form action="{{url_for('settingsupdate', action = 'delete')}}" method="POST">
+
+          <div class="alert alert-danger" role="alert">
+            Warning - Do you want to delete your account? Once deleted, your application and messages will be gone forever.
+          </div>
+
+          
+      </div>
+      <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      <input type="submit" class="btn btn-danger" value="Delete my account"></input>
+
+
+      </form>
+      
+      </div>
+  </div>
+  </div>
+</div>
+
+
+<!-- END OF MODAL-->
+
+      </section>
+
+      {% endfor %}
+
+      {% endblock %}
+
+    {% block js %}
+
+
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    
+    <!-- Vendor JS Files -->
+    <script src="{{url_for('static',filename='assets/vendor/purecounter/purecounter_vanilla.js')}}"></script>
+    <script src="{{url_for('static',filename='assets/vendor/aos/aos.js')}}"></script>
+    <!--<script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>-->
+    <script src="{{url_for('static',filename='assets/vendor/glightbox/js/glightbox.min.js')}}"></script>
+    <script src="{{url_for('static',filename='assets/vendor/isotope-layout/isotope.pkgd.min.js')}}"></script>
+    <script src="{{url_for('static',filename='assets/vendor/swiper/swiper-bundle.min.js')}}"></script>
+    <script src="{{url_for('static',filename='assets/vendor/waypoints/noframework.waypoints.js')}}"></script>
+
+    <!-- Template Main JS File -->
+    <script src="{{url_for('static',filename='assets/js/main.js')}}"></script>
+
+    <!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.bundle.min.js"></script>
+
+    {% endblock %}
