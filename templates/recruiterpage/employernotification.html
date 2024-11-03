@@ -1,0 +1,144 @@
+{% extends '/recruiterpage/employerbase.html' %}
+{% block activenotif %} <li class="active current-page"> {% endblock %}
+{% block employername %}<h5 class="profile-name lh-lg mt-2 text-truncate">{{employer[0][2]}}</h5>{% endblock %}
+{% block employername2 %}<span class="d-none d-md-block me-2">{{employer[0][2]}}</span>{% endblock %}
+{% block profile %}<img src="{{url_for('static',filename='assets/img/employerprofilepic/' + employer[0][10])}}" class="profile-thumb rounded-2 p-2 d-lg-flex d-none" alt="Bootstrap Gallery" /> {% endblock %}
+{% block profile2 %}<img src="{{url_for('static',filename='assets/img/employerprofilepic/' + employer[0][10])}}" class="rounded-circle img-3x" alt="Bootstrap Gallery" />{% endblock %}
+
+
+{% block specificcss %}
+
+  <style>
+
+#postjob:hover{
+	color: #fff;
+	transition: 0.3s;
+	background-color: #ce2626;
+}
+
+    .section-50 {
+      padding: 50px 0;
+  }
+  
+  .m-b-50 {
+      margin-bottom: 50px;
+  }
+  
+  .dark-link {
+      color: #333;
+  }
+  
+  .heading-line {
+      position: relative;
+      padding-bottom: 5px;
+  }
+  
+  .heading-line:after {
+      content: "";
+      height: 4px;
+      width: 75px;
+      background-color: #ffdd00;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+  }
+  
+  .notification-ui_dd-content {
+      margin-bottom: 30px;
+  }
+  
+  .notification-list {
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+      justify-content: space-between;
+      padding: 20px;
+      margin-bottom: 7px;
+      background: #fff;
+      -webkit-box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
+  }
+  
+  .notification-list--unread {
+      border-left: 2px solid #ffdd00;
+  }
+  
+  .notification-list .notification-list_content {
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+  }
+  
+  .notification-list .notification-list_content .notification-list_img img {
+      height: 48px;
+      width: 48px;
+      border-radius: 50px;
+      margin-right: 20px;
+  }
+  
+  .notification-list .notification-list_content .notification-list_detail p {
+      margin-bottom: 5px;
+      line-height: 1.2;
+  }
+  
+  .notification-list .notification-list_feature-img img {
+      height: 48px;
+      width: 48px;
+      border-radius: 5px;
+      margin-left: 20px;
+  }</style>
+
+{% endblock %}
+
+{% block content %}
+					
+                    <div class="container">
+
+                        <section class="section-50" style="margin-top: 50px;">
+                            <div class="container">
+                                <h3 class="m-b-50 heading-line">Notifications <i class="fa fa-bell text-muted"></i></h3>
+                        
+                                <div class="notification-ui_dd-content">
+
+                                    {% for notif in result %}
+
+                                    <div class="notification-list notification-list--unread" style="background-color: #b7ebc8;">
+                                        <div class="notification-list_content">
+                                            <div class="notification-list_img">
+                                                {% if 'https' in notif[5] %}
+                                                <img src="{{notif[5]}}" alt="user">
+                                                {%else%}
+                                                <img src="{{url_for('static',filename='assets/img/userprofilepic/' + notif[5])}}" alt="user">
+                                                {% endif %}
+                                            </div>
+                                            <div class="notification-list_detail">
+                                                
+                                                <p><a href="{{url_for('employerpages', pages = 'manageapplicants', alumniid = notif[0], appID =  notif[6])}}"><b>{{notif[3]}}</b></a> applied to your posted job.</p>
+                                                <p class="text-muted">They applied on your job post, {{notif[4]}}, on {{notif[2]}}</p>
+                                                
+                                            </div>
+                                        </div>
+                                        <div class="notification-list_feature-img">
+                                            {% if 'https' in notif[5] %}
+                                            <img src="{{notif[5]}}" alt="Feature image">
+                                            {% else %}
+                                            <img src="{{url_for('static',filename='assets/img/userprofilepic/' + notif[5])}}" alt="Feature image">
+                                            {% endif %}
+
+                                        </div>
+                                    </div>
+
+                                    {% endfor %}                             
+                                    
+                                </div>
+                        
+                            </div>
+                        </section>
+					
+                    </div>
+
+{% endblock %}
+
+            

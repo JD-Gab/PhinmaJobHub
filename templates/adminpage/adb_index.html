@@ -1,0 +1,445 @@
+{% extends '/adminpage/adminbase.html'%}
+{% block adminname %}<span class="d-none d-md-block dropdown-toggle ps-2">{{result[3]}}</span>{% endblock %}
+{% block adminname2 %}<h6>{{result[3]}}</h6>{% endblock %}
+{% block role %}<span>{{result[4]}}</span>{% endblock %}
+{% block content %}
+
+
+  <main id="main" class="main">
+    <style>
+    .hide {
+      display: none;
+      }
+    </style>
+
+    <div class="pagetitle">
+      <h1>Dashboard</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{{url_for('admindb')}}">Home</a></li>
+          <li class="breadcrumb-item active">Dashboard</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section dashboard">
+      <div class="row">
+
+        <!-- Left side columns -->
+        <div class="col-lg-8">
+          <div class="row">
+
+            <!-- Sales Card -->
+            <div class="col-xxl-4 col-md-6" id="content-today">
+              <div class="card info-card sales-card">
+
+                <div class="filter">
+                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                    <li class="dropdown-header text-start">
+                      <h6>Filter</h6>
+                    </li>
+
+                    <li><a class="dropdown-item" href="#" onclick="changeCardContent('Option 1')">Today</a></li>
+                    <li><a class="dropdown-item" href="#" onclick="changeCardContent('Option 2')">This Month</a></li>
+                    <li><a class="dropdown-item" href="#" onclick="changeCardContent('Option 3')">This Year</a></li>
+                    <li><a class="dropdown-item" href="#" onclick="changeCardContent('Option 4')">Total</a></li>
+                  </ul>
+                </div>
+
+                <div class="card-body">
+                  <h5 class="card-title">Job Posts <span>| Today</span></h5>
+
+                  <div class="d-flex align-items-center">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                      <i class="bi bi-bookmark"></i>
+                    </div>
+                    <div class="ps-3">
+                      <h6>{{numjobs[0]}}</h6>
+                      <span class="text-muted small pt-2 ps-1">Jobs posted</span>
+                      
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div><!-- End Sales Card -->
+
+            <!-- Sales Card -->
+            <div class="col-xxl-4 col-md-6 hide" id="content-month">
+              <div class="card info-card sales-card">
+
+                <div class="filter">
+                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                    <li class="dropdown-header text-start">
+                      <h6>Filter</h6>
+                    </li>
+
+                    <li><a class="dropdown-item" href="#" onclick="changeCardContent('Option 1')">Today</a></li>
+                    <li><a class="dropdown-item" href="#" onclick="changeCardContent('Option 2')">This Month</a></li>
+                    <li><a class="dropdown-item" href="#" onclick="changeCardContent('Option 3')">This Year</a></li>
+                    <li><a class="dropdown-item" href="#" onclick="changeCardContent('Option 4')">Total</a></li>
+                  </ul>
+                </div>
+
+                <div class="card-body">
+                  <h5 class="card-title">Job Posts <span>| Month</span></h5>
+
+                  <div class="d-flex align-items-center">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                      <i class="bi bi-bookmark"></i>
+                    </div>
+                    <div class="ps-3">
+                      <h6>{{numjobs[1]}}</h6>
+                      <span class="text-muted small pt-2 ps-1">Jobs posted</span>
+                      
+
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div><!-- End Sales Card -->
+
+            <!-- Sales Card -->
+            <div class="col-xxl-4 col-md-6 hide" id="content-year">
+              <div class="card info-card sales-card">
+
+                <div class="filter">
+                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                    <li class="dropdown-header text-start">
+                      <h6>Filter</h6>
+                    </li>
+
+                    <li><a class="dropdown-item" href="#" onclick="changeCardContent('Option 1')">Today</a></li>
+                    <li><a class="dropdown-item" href="#" onclick="changeCardContent('Option 2')">This Month</a></li>
+                    <li><a class="dropdown-item" href="#" onclick="changeCardContent('Option 3')">This Year</a></li>
+                    <li><a class="dropdown-item" href="#" onclick="changeCardContent('Option 4')">Total</a></li>
+                  </ul>
+                </div>
+
+                <div class="card-body">
+                  <h5 class="card-title">Job Posts <span>| Year</span></h5>
+
+                  <div class="d-flex align-items-center">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                      <i class="bi bi-bookmark"></i>
+                    </div>
+                    <div class="ps-3">
+                      <h6 id="jobs" data-jobs = "{{numjobs[2]}}">{{numjobs[2]}}</h6>
+                      <span class="text-muted small pt-2 ps-1">Jobs posted</span>
+                      
+
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div><!-- End Sales Card -->
+
+            <!-- Sales Card -->
+            <div class="col-xxl-4 col-md-6 hide" id="content-total">
+              <div class="card info-card sales-card">
+
+                <div class="filter">
+                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                    <li class="dropdown-header text-start">
+                      <h6>Filter</h6>
+                    </li>
+
+                    <li><a class="dropdown-item" href="#" onclick="changeCardContent('Option 1')">Today</a></li>
+                    <li><a class="dropdown-item" href="#" onclick="changeCardContent('Option 2')">This Month</a></li>
+                    <li><a class="dropdown-item" href="#" onclick="changeCardContent('Option 3')">This Year</a></li>
+                    <li><a class="dropdown-item" href="#" onclick="changeCardContent('Option 4')">Total</a></li>
+                  </ul>
+                </div>
+
+                <div class="card-body">
+                  <h5 class="card-title">Job Posts <span>| Total</span></h5>
+
+                  <div class="d-flex align-items-center">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                      <i class="bi bi-bookmark"></i>
+                    </div>
+                    <div class="ps-3">
+                      <h6>{{numjobs[3]}}</h6>
+                      <span class="text-muted small pt-2 ps-1">Jobs posted</span>
+                      
+
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div><!-- End Sales Card -->
+
+
+
+
+
+            <!-- Revenue Card -->
+            <div class="col-xxl-4 col-md-6">
+              <div class="card info-card revenue-card">
+
+                <div class="filter">
+                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                    <li class="dropdown-header text-start">
+                      <h6>Filter</h6>
+                    </li>
+
+                    <li><a class="dropdown-item" href="#">Today</a></li>
+                    <li><a class="dropdown-item" href="#">This Month</a></li>
+                    <li><a class="dropdown-item" href="#">This Year</a></li>
+                  </ul>
+                </div>
+
+                <div class="card-body">
+                  <h5 class="card-title">Applicants <span> | Total </span></h5>
+
+                  <div class="d-flex align-items-center">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                      <i class="bi bi-people"></i>
+                    </div>
+                    <div class="ps-3">
+                      <a><h6 id="applicants" data-applicants = "{{applicants}} " data-alumni = "{{total}}">{{applicants}}</h6></a>
+                      <span class="text-muted small pt-2 ps-1">Applicants</span>
+                      
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div><!-- End Revenue Card -->
+
+            <!-- Customers Card -->
+            <div class="col-xxl-4 col-md-6">
+
+              <div class="card info-card customers-card">
+
+                  <div class="card-body">
+                  <h5 class="card-title">Companies <span>| Total</span></h5>
+
+                  <div class="d-flex align-items-center">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                      <i class="bi bi-building"></i>
+                    </div>
+                    <div class="ps-3">
+                      <h6 id="companies" data-employer = "{{employer}}">{{employer}}</h6>
+                      <span class="text-muted small pt-2 ps-1">Companies</span>
+                      
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div><!-- End Revenue Card -->
+
+            <!-- Customers Card -->
+            <div class="col-xxl-4 col-md-6">
+
+              <div class="card info-card customers-card">
+
+                <div class="card-body">
+                  <h5 class="card-title">Registered <span>| Total</span></h5>
+
+                  <div class="d-flex align-items-center">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                      <i class="bi bi-card-list"></i>
+                    </div>
+                    <div class="ps-3">
+                      <h6>{{accvalid[0]}}</h6>
+                      <span class="text-muted small pt-2 ps-1">Registered alumni accounts</span>
+
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+            </div><!-- End Customers Card -->
+
+            
+
+            <!-- Recent Sales -->
+            <div class="col-12">
+              <div class="card recent-sales overflow-auto">
+
+                <div class="filter">
+                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                    <li class="dropdown-header text-start">
+                      <h6>Filter</h6>
+                    </li>
+
+                    <li><a class="dropdown-item" href="#">Today</a></li>
+                    <li><a class="dropdown-item" href="#">This Month</a></li>
+                    <li><a class="dropdown-item" href="#">This Year</a></li>
+                  </ul>
+                </div>
+
+                <div class="card-body">
+                  <h5 class="card-title">Current created accounts <span></span></h5>
+
+                  <table class="table table-borderless datatable">
+                    <thead>
+                      <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Users</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Account created</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Valid</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      
+                      {% for applicantsdata in alumnidata %}
+                      <tr>
+                        <th scope="row"><a href="#">{{applicantsdata[0]}}</a></th>
+                        <td>{{applicantsdata[1]}}</td>
+                        <td><a href="#" class="text-primary">{{applicantsdata[2]}}</a></td>
+                        <td>{{applicantsdata[3]}}</td>
+                        {% if applicantsdata[4] == 1%}
+                        <td><span class="badge bg-success">Active</span></td>
+                        {% else %}
+                        <td><span class="badge bg-warning">Archived</span></td>
+                        {% endif %}
+
+                        {% if applicantsdata[5] == 'Pending' %}
+                        <td><span class="badge bg-warning">Pending</span></td>
+                        {% elif applicantsdata[5] == 'Registered' %}
+                        <td><span class="badge bg-success">Registered</span></td>
+                        {% elif applicantsdata[5] == 'Unregistered' %}
+                        <td><span class="badge bg-danger">Unregistered</span></td>
+                        {% endif %}
+                        
+                      </tr>
+
+                      {% endfor %}
+                      
+                    </tbody>
+                  </table>
+
+                </div>
+
+              </div>
+            </div><!-- End Recent Sales -->
+
+            
+
+          </div>
+        </div><!-- End Left side columns -->
+
+        <!-- Right side columns -->
+        <div class="col-lg-4">
+
+          
+
+          <!-- Website Traffic -->
+          <div class="card">
+            <div class="filter">
+              <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+              <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                <li class="dropdown-header text-start">
+                  <h6>Filter</h6>
+                </li>
+
+                <li><a class="dropdown-item" href="#">Today</a></li>
+                <li><a class="dropdown-item" href="#">This Month</a></li>
+                <li><a class="dropdown-item" href="#">This Year</a></li>
+              </ul>
+            </div>
+
+            <div class="card-body pb-0">
+              <h5 class="card-title">Website Statistics <span>| Today</span></h5>
+
+              <div id="trafficChart" style="min-height: 500px;" class="echart"></div>
+
+              <script>
+                var anchor = document.getElementById('applicants');
+                var anchor2 = document.getElementById('jobs');
+                var anchor3 = document.getElementById('companies');
+                var applicants = anchor.getAttribute('data-applicants');
+                var jobs = anchor2.getAttribute('data-jobs');
+                var companies = anchor3.getAttribute('data-employer');
+                var alumni = anchor.getAttribute('data-alumni');
+                var registered = '{{accvalid[0]}}';
+
+                
+                document.addEventListener("DOMContentLoaded", () => {
+                  
+                  echarts.init(document.querySelector("#trafficChart")).setOption({
+                    
+                    tooltip: {
+                      trigger: "item"
+                    },
+                    legend: {
+                      top: "5%",
+                      left: "center"
+                    },
+                    series: [{
+                      name: "Data From",
+                      type: "pie",
+                      radius: ["40%", "70%"],
+                      avoidLabelOverlap: false,
+                      label: {
+                        show: false,
+                        position: "center"
+                      },
+                      emphasis: {
+                        label: {
+                          show: true,
+                          fontSize: "18",
+                          fontWeight: "bold"
+                        }
+                      },
+                      labelLine: {
+                        show: false
+                      },
+                      data: [{
+                          value: jobs,
+                          name: "Job Posts"
+                        },
+                        {
+                          value: companies,
+                          name: "Companies"
+                        },
+                        {
+                          value: alumni,
+                          name: "Alumni accounts"
+                        },
+                        {
+                          value: applicants,
+                          name: "Job Applications"
+                        },
+                        {
+                          value: registered,
+                          name: "Registered accounts"
+                        }
+                      ]
+                    }]
+                  });
+                });
+              </script>
+
+            </div>
+          </div><!-- End Website Traffic -->
+
+          
+
+        </div><!-- End Right side columns -->
+
+      </div>
+    </section>
+
+    
+
+  </main><!-- End #main -->
+
+  
+
+  {% endblock %}

@@ -1,0 +1,155 @@
+{% extends '/adminpage/adminbase.html' %}
+{% block adminname %}<span class="d-none d-md-block dropdown-toggle ps-2">{{admin[3]}}</span>{% endblock %}
+{% block adminname2 %}<h6>{{admin[3]}}</h6>{% endblock %}
+{% block role %}<span>{{admin[4]}}</span>{% endblock %}
+
+{% block content %}
+
+
+  <main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1>List of Location</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="">Home</a></li>
+          <li class="breadcrumb-item">Location</li>
+        </ol>
+
+        <button type="button" class="btn btn-outline-success btn-sm" data-bs-toggle="modal" data-bs-target="#addlocation">Add location+</button>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+          <strong>Done!</strong> {{messages[0]}}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endif %}
+        {% endwith %}
+      </nav>
+    </div><!-- End Page Title -->
+
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Location</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      
+      <tbody>
+        {% for location in result %}
+        <tr>
+          <th scope="row">{{location[0]}}</th>
+          
+          <td><a href="" data-bs-toggle="modal" data-bs-target="#editlocation{{location[1]}}">Update</a> &nbsp;  &nbsp; &nbsp;
+               <a href="" data-bs-toggle="modal" data-bs-target="#deletelocation{{location[1]}}" style="color: red;">Delete</a></td>
+        </tr>
+
+        <!-- Modal for editing -->
+<div class="modal fade" id="editlocation{{location[1]}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+  <div class="modal-content">
+      <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">Edit a location</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <form action="{{url_for('modifylocation', action = 'edit', locid = location[1])}}" method="POST">
+
+          <div class="col-12 mb-3">
+            <label for="inputAddress" class="form-label">Edit location: </label>
+            <input type="text" name="editlocation" class="form-control" id="inputAddress" value="{{location[0]}}" placeholder="" required>
+          </div>
+
+          
+      </div>
+      <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      <input type="submit" class="btn btn-primary" value="Save job location"></input>
+
+
+      </form>
+      
+      </div>
+  </div>
+  </div>
+</div>
+
+<!-- END OF MODAL-->
+
+         <!-- Modal for deleting -->
+<div class="modal fade" id="deletelocation{{location[1]}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+  <div class="modal-content">
+      <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">Delete a location</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <form action="{{url_for('modifylocation', action = 'delete', locid = location[1])}}" method="POST">
+
+          <div class="row mb-2">
+            <div class="col-lg-9 col-md-8 label ">Are you sure you want to delete this job location? </div>
+            <div class="col-lg-3 col-md-4" style="font-weight: bold;">{{location[0]}}</div>
+          </div>
+          
+      </div>
+      <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      <input type="submit" class="btn btn-danger" value="Delete job location"></input>
+
+
+      </form>
+      
+      </div>
+  </div>
+  </div>
+</div>
+
+
+<!-- END OF MODAL-->
+
+        {% endfor %}
+        
+      </tbody>
+    </table>
+    <!-- End Table with stripped rows -->
+
+    <!-- Modal -->
+<div class="modal fade" id="addlocation" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+  <div class="modal-content">
+      <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">Add job location</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <form action="{{url_for('adminaddlocation')}}" method="POST">
+
+        <div class="col-12 mb-3">
+          <label for="inputAddress" class="form-label">Add new location:</label>
+          <input type="text" name="location" class="form-control" id="inputAddress" placeholder="Add by district, or specific place" required>
+        </div>
+          
+      </div>
+      <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      <input type="submit" class="btn btn-primary" value="Add job location"></input>
+
+
+      </form>
+      
+      </div>
+  </div>
+  </div>
+</div>
+
+
+<!-- END OF MODAL-->
+
+  </main><!-- End #main -->
+
+  {% endblock %}

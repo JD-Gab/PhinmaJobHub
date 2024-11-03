@@ -1,0 +1,293 @@
+{% extends '/recruiterpage/employerbase.html' %}
+{% block employername %}<h5 class="profile-name lh-lg mt-2 text-truncate">{{compname[0][2]}}</h5>{% endblock %}
+{% block employername2 %}<span class="d-none d-md-block me-2">{{compname[0][2]}}</span>{% endblock %}
+{% block profile %}<img src="{{url_for('static',filename='assets/img/employerprofilepic/' + compname[0][10])}}" class="profile-thumb rounded-2 p-2 d-lg-flex d-none" alt="Bootstrap Gallery" /> {% endblock %}
+{% block profile2 %}<img src="{{url_for('static',filename='assets/img/employerprofilepic/' + compname[0][10])}}" class="rounded-circle img-3x" alt="Bootstrap Gallery" />{% endblock %}
+{% block notifications %}
+{% if notif %}
+<div class="dropdown-item">
+	<div class="d-flex py-2 border-bottom">
+		{% if 'https' in notif[0][5] %}
+		<img src="{{notif[0][5]}}" class="img-4x me-3 rounded-3" alt="Admin Theme" />
+		{% else %}
+		<img src="{{url_for('static',filename='assets/img/userprofilepic/' + notif[0][5])}}" class="img-4x me-3 rounded-3" alt="Admin Theme" />
+		{% endif %}
+		<div class="m-0">
+			<h5 class="mb-1 fw-semibold">{{notif[0][3]}}</h5>
+			<p class="mb-1">{{notif[0][3]}}  applied to your job post.</p>
+			<p class="small m-0 text-primary">{{notif[0][2]}}</p>
+		</div>
+	</div>
+</div>
+
+{% else %}
+
+<div class="dropdown-item">
+	<div class="d-flex py-2 border-bottom">
+		<p> No notification. </p>
+	</div>
+</div>
+
+{%endif%}
+
+{% endblock %}
+
+{% block specificcss %}
+<style>
+
+#postjob:hover{
+	color: #fff;
+	transition: 0.3s;
+	background-color: #ce2626;
+}
+
+body {
+    background: #1d3f5b;
+}
+
+.form-control:focus {
+    box-shadow: none;
+    border-color: #BA68C8
+}
+
+.profile-button {
+    background: rgb(99, 39, 120);
+    box-shadow: none;
+    border: none
+}
+
+.profile-button:hover {
+    background: #682773
+}
+
+.profile-button:focus {
+    background: #682773;
+    box-shadow: none
+}
+
+.profile-button:active {
+    background: #682773;
+    box-shadow: none
+}
+
+.back:hover {
+    color: #682773;
+    cursor: pointer
+}
+
+.labels {
+    font-size: 11px
+}
+
+.add-experience:hover {
+    background: #BA68C8;
+    color: #fff;
+    cursor: pointer;
+    border: solid 1px #BA68C8
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container rounded bg-white mt-5 mb-5 col-lg-11">
+    <div class="row">
+        <div class="col-md-4 border-right">
+            <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="{{url_for('static',filename='assets/img/employerprofilepic/' +  compname[0][10])}}"><span class="font-weight-bold">{{compname[0][2]}}</span><span class="text-black-50">{{compname[0][1]}}</span>
+              <span><button type="button" class="btn btn-warning btn-sm mt-2" data-bs-toggle="modal" data-bs-target="#exampleModal">Change profile</button></span>
+              <div class="small font-italic text-muted mb-4" style="font-size: 12px;">(JPG or PNG no larger than 5 MB)</div></div>
+        </div>
+        <div class="col-md-8 border-right">
+            <div class="p-3 py-5">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="text-right">Profile</h4>
+                </div>
+                
+                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Overview</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Settings</button>
+                    </li>
+                    
+                  </ul>
+                  <div class="tab-content" id="pills-tabContent">
+                    <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+
+                        <div class="col-md-12">
+                            <div class="card mb-3">
+                              <div class="card-body">
+                                
+                                
+                                <div class="row">
+                                  <div class="col-sm-3">
+                                    <h6 class="mb-0">Website</h6>
+                                  </div>
+                                  <div class="col-sm-9 text-secondary">
+                                    {{compname[0][4]}}
+                                  </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                  <div class="col-sm-3">
+                                    <h6 class="mb-0">Company size</h6>
+                                  </div>
+                                  <div class="col-sm-9 text-secondary">
+                                    {{compname[0][8]}}
+                                  </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                  <div class="col-sm-3">
+                                    <h6 class="mb-0">Industry</h6>
+                                  </div>
+                                  <div class="col-sm-9 text-secondary">
+                                    {{compname[0][5]}}
+                                  </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                  <div class="col-sm-3">
+                                    <h6 class="mb-0">Specialties</h6>
+                                  </div>
+                                  <div class="col-sm-9 text-secondary">
+                                    {{compname[0][7]}}
+                                  </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                  <div class="col-sm-3">
+                                    <h6 class="mb-0">Address</h6>
+                                  </div>
+                                  <div class="col-sm-9 text-secondary">
+                                    {{compname[0][6]}}
+                                  </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                  <div class="col-sm-3">
+                                    <h6 class="mb-0">About the Company</h6>
+                                  </div>
+                                  <div class="col-sm-9 text-secondary">
+                                    <p id="intro" style="white-space: pre-line;">{{compname[0][9]}}</p>
+                                  </div>
+                                </div>
+                                <script>
+                                  const originalText = "{{compname[0][9]}}"; // Replace with actual text
+                                  const formattedText = originalText.replace(/\\n/g, "<br><br>");
+                                  document.getElementById("intro").innerHTML = formattedText;
+                                </script>
+                                
+                                
+                              </div>
+                            </div>
+
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                    <div class="col-md-8 col-lg-12">
+
+                        <form action="{{url_for('employerprofilesettings')}}" method="POST">
+                        <div class="row mt-2">
+                          <div class="col-md-6"><label class="labels">Website</label><input type="text" name="website" class="form-control" placeholder="yourcompany.com" value="{{compname[0][4]}}"></div>
+                          <div class="col-md-6"><label class="labels">Industry</label><input type="text" name="industry" class="form-control" value="{{compname[0][5]}}" placeholder="Software, Engineering, etc."></div>
+                        </div>
+                        <div class="row mt-2">
+                          <div class="col-md-6"><label class="labels">Company size</label>
+                            <select class="form-select" name="size">
+                              {% if compname[0][8] %}
+                              <option selected readonly>{{ compname[0][8] }}</option>
+                              {% else %}
+                              <option selected disabled>company size</option>
+                              {% endif %}
+                              <option value="less than 50">less than 50</option>
+                              <option value="50 - 100">50 - 100</option>
+                              <option value="101 - 500">101 - 500</option>
+                              <option value="501 - 1000">501 - 1000</option>
+                              <option value="1001 - 5000">1001 - 5000</option>
+                              <option value="5001 - 10000">5001 - 10000</option>
+                              <option value="More than 10000">More than 10000</option>
+
+                            </select></div>
+                          <div class="col-md-6"><label class="labels">Company location</label><input type="text" name="comploc" class="form-control" value="{{compname[0][6]}}" placeholder="location"></div>
+                        </div>
+                        <div class="row mt-2">
+                          <div class="col-md-12"><label class="labels">Specialties</label><input type="text" name="specialties" class="form-control" value="{{compname[0][7]}}" placeholder="specialties"></div>
+                        </div>
+                        <div class="row mt-2">
+                          <div class="col-md-12"><label class="labels">About the company (1000 max characters)</label><textarea class="form-control" name="about" rows="5">{{compname[0][9]}}</textarea></div>
+                        </div>
+                        
+                        <div class="mt-5 text-center"><input class="btn btn-primary profile-button" type="submit" value="Save Profile"></input></div>
+                        </form>  
+                      </div>
+                </div>
+
+                
+            </div>
+            </div>
+        </div>
+
+          {% with messages = get_flashed_messages() %}
+          {% if messages %}
+        <div class="alert border border-success alert-dismissible fade show text-success mx-3" role="alert">
+          <b>Saved!</b> {{messages[0]}}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+          {% endif %}
+          {% endwith %}
+        
+    </div>
+</div>
+</div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+  <div class="modal-content">
+      <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">Update profile picture</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+              <form action="{{url_for('profilepicupdate')}}" method="POST" enctype = "multipart/form-data">
+              <div class="col-md-12">
+              <input type="file" name="profilepic" accept=".jpg, .jpeg, .png, .webp" onchange="previewImage(event)">
+              </div>
+              <br>
+              <div class="profile-header-img" style="width: 250px;height: 250px; margin-left: 100px; margin-right: 100px;">
+                  <img src="{{url_for('static',filename='assets/img/employerprofilepic/' + compname[0][10])}}" style="max-width: 100%; max-height: 100%; height: 100%; justify-content: center;" id="preview">
+              </div>
+          
+          
+          
+      </div>
+      <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      <input type="submit" class="btn btn-primary" value="Update profile"></input>
+      </form>
+      
+      </div>
+  </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  function previewImage(event) {
+     var input = event.target;
+     var image = document.getElementById('preview');
+     if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+           image.src = e.target.result;
+        }
+        reader.readAsDataURL(input.files[0]);
+     }
+  }
+</script>
+
+
+<!-- END OF MODAL-->
+{% endblock %}

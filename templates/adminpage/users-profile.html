@@ -1,0 +1,167 @@
+{% extends '/adminpage/adminbase.html' %}
+{% block adminname %}<span class="d-none d-md-block dropdown-toggle ps-2">{{admin[3]}}</span>{% endblock %}
+{% block adminname2 %}<h6>{{admin[3]}}</h6>{% endblock %}
+{% block role %}<span>{{admin[4]}}</span>{% endblock %}
+{% block content %}
+
+  <main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1>Profile</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{{url_for('admindb')}}">Home</a></li>
+          <li class="breadcrumb-item">Users</li>
+          <li class="breadcrumb-item active">Profile</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section profile">
+      <div class="row">
+        <div class="col-xl-4">
+
+          
+
+          <div class="card">
+            <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+
+              <img src="{{url_for('static',filename='assets/adminassets/assets/img/default_pic.jpg')}}" alt="Profile" class="rounded-circle">
+              <h2>{{admin[3]}}</h2>
+              <h3>{{admin[4]}}</h3>
+              
+            </div>
+          </div>
+
+        </div>
+
+        <div class="col-xl-8">
+
+          <div class="card">
+            <div class="card-body pt-3">
+              <!-- Bordered Tabs -->
+              <ul class="nav nav-tabs nav-tabs-bordered">
+
+                <li class="nav-item">
+                  <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">Overview</button>
+                </li>
+
+                <li class="nav-item">
+                  <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Edit Profile</button>
+                </li>
+
+                
+
+              </ul> 
+              <div class="tab-content pt-2 pb-0" id="profile-overview">
+
+                
+                  <h5 class="card-title">Profile Details</h5>
+
+                  
+
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label ">Email: </div>
+                    <div class="col-lg-9 col-md-8">{{admin[1]}}</div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">Username: </div>
+                    <div class="col-lg-9 col-md-8">{{admin[3]}}</div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">Role: </div>
+                    <div class="col-lg-9 col-md-8">{{admin[4]}}</div>
+                  </div>
+
+                  {% with messages = get_flashed_messages() %}
+                  {% if messages %}
+                    {% if message %}
+                    <div class="alert border border-{{color}} alert-dismissible fade show text-{{color}}" role="alert">
+                      <b>{{message}}</b> {{messages[0]}}
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    {% else %}
+                    <div class="alert border border-warning alert-dismissible fade show text-warning" role="alert">
+                      <b>Uh-oh!</b> {{messages[0]}}
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    {% endif %}
+
+                  {% endif %}
+                  {% endwith %}
+
+                </div>
+
+                <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
+
+                  <!-- Profile Edit Form -->
+                  <form action="{{url_for('adminprofileedit')}}" method="POST">
+
+                    <div class="row mb-3">
+                      <label for="Job" class="col-md-4 col-lg-3 col-form-label">Role</label>
+                      <div class="col-md-8 col-lg-9">
+
+                        <select class="form-select" name="job" aria-label="" required>
+                          {% if admin[4] == 'Administrator' %}
+                          <option selected>Administrator</option>
+                          <option value="Other">Other</option>
+                          {% else %}
+                          <option selected>Other</option>
+                          
+                          {% endif %}
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="row mb-3">
+                      <label for="Username" class="col-md-4 col-lg-3 col-form-label">Username</label>
+                      <div class="col-md-8 col-lg-9">
+                        <input name="username" type="text" class="form-control" id="Username" value="{{admin[3]}}">
+                      </div>
+                    </div>
+
+                    
+                    <div class="row mb-3">
+                      <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
+                      <div class="col-md-8 col-lg-9">
+                        <input name="password" type="password" class="form-control" id="currentPassword" required>
+                      </div>
+                    </div>
+
+                    <div class="row mb-3">
+                      <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New Password</label>
+                      <div class="col-md-8 col-lg-9">
+                        <input name="newpassword" type="password" class="form-control" id="newPassword">
+                      </div>
+                    </div>
+
+                    <div class="row mb-3">
+                      <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Re-enter New Password</label>
+                      <div class="col-md-8 col-lg-9">
+                        <input name="renewpassword" type="password" class="form-control" id="renewPassword">
+                      </div>
+                    </div>
+
+                    <div class="text-center">
+                      <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </div>
+                    
+                  </form><!-- End Profile Edit Form -->
+
+                </div>
+
+              </div><!-- End Bordered Tabs -->
+              
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main><!-- End #main -->
+
+  {% endblock %}

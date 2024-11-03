@@ -1,0 +1,202 @@
+{% extends '/adminpage/adminbase.html' %}
+{% block adminname %}<span class="d-none d-md-block dropdown-toggle ps-2">{{admin[3]}}</span>{% endblock %}
+{% block adminname2 %}<h6>{{admin[3]}}</h6>{% endblock %}
+{% block role %}<span>{{admin[4]}}</span>{% endblock %}
+
+{% block content %}
+
+
+  <main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1>Categories</h1> 
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{{url_for('admindb')}}">Home</a></li>
+          <li class="breadcrumb-item">Categories</li>
+          
+        </ol>
+        <button type="button" class="btn btn-outline-success btn-sm" data-bs-toggle="modal" data-bs-target="#addcategory">Add category+</button>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        {% if error %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+          <strong>{{error}}</strong> {{messages[0]}}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% else %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+          <strong>Done!</strong> {{messages[0]}}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endif %}
+        {% endif %}
+        {% endwith %}
+      
+      </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section">
+      
+
+      
+
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">Category</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            {% for category in result %}
+            <tbody>
+              <tr>
+                <th scope="row">{{category[0]}}</th>
+                
+                <td><a href="" data-bs-toggle="modal" data-bs-target="#editcategory{{category[1]}}">Update</a> &nbsp;  &nbsp; &nbsp;
+                     <a href="" data-bs-toggle="modal" data-bs-target="#deletecategory{{category[1]}}" style="color: red;">Delete</a></td>
+      
+              </tr>
+
+
+              <!-- Modal for editing -->
+<div class="modal fade" id="editcategory{{category[1]}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+  <div class="modal-content">
+      <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">Edit a category</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <form action="{{url_for('adminmodifycategory', action = 'edit', catid = category[1])}}" method="POST" enctype ="multipart/form-data">
+
+          <div class="col-12 mb-3">
+            <label for="inputAddress" class="form-label">Edit category: </label>
+            <input type="text" name="editcategory" class="form-control" id="inputAddress" value="{{category[0]}}" placeholder="" required>
+          </div>
+
+          <div class="col-md-12">
+            <input type="file" name="categorypic" accept=".jpg, .jpeg, .png, .webp" onchange="previewImage(event)">
+            </div>
+            <br>
+            <div class="profile-header-img" style="width: 250px;height: 250px; margin-left: 100px; margin-right: 100px;">
+                
+                <img src="{{url_for('static',filename='assets/img/categories-landingpage/' + category[2])}}" style="max-width: 100%; max-height: 100%; height: 100%; justify-content: center;" id="preview">
+                
+            </div>
+
+          
+      </div>
+      <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      <input type="submit" class="btn btn-primary" value="Save job category"></input>
+
+
+      </form>
+      
+      
+      </div>
+  </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  function previewImage(event) {
+     var input = event.target;
+     var image = document.getElementById('preview');
+     if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+           image.src = e.target.result;
+        }
+        reader.readAsDataURL(input.files[0]);
+     }
+  }
+</script>
+
+<!-- END OF MODAL-->
+
+
+<!-- Modal for deleting -->
+<div class="modal fade" id="deletecategory{{category[1]}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+  <div class="modal-content">
+      <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">Delete a category</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <form action="{{url_for('adminmodifycategory', action = 'delete', catid = category[1])}}" method="POST">
+
+          <div class="row mb-2">
+            <div class="col-lg-9 col-md-8 label ">Are you sure you want to delete this job category? </div>
+            <div class="col-lg-3 col-md-4" style="font-weight: bold;">{{category[0]}}</div>
+          </div>
+          
+      </div>
+      <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      <input type="submit" class="btn btn-danger" value="Delete job category"></input>
+
+
+      </form>
+      
+      </div>
+  </div>
+  </div>
+</div>
+
+
+<!-- END OF MODAL-->
+
+      
+              {% endfor %}
+              
+            </tbody>
+          </table>
+          <!-- End Table with stripped rows -->
+
+    </section>
+
+
+    <!-- Modal -->
+<div class="modal fade" id="addcategory" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">  
+  <div class="modal-content">
+      <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">Add Category</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <form action="{{url_for('adminmodifycategory', action = 'add')}}" method="POST">
+
+        <div class="col-12 mb-3">
+          <label for="inputAddress" class="form-label">Add new category:</label>
+          <input type="text" name="category" class="form-control" id="inputAddress" placeholder="Add by company category" required>
+        </div>
+          
+      </div>
+      <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      <input type="submit" class="btn btn-primary" value="Add job category"></input>
+
+
+      </form>
+      
+      </div>
+  </div>
+  </div>
+</div>
+
+
+<!-- END OF MODAL-->
+
+  <script src="{{url_for('static',filename='assets/js/jquery.js')}}"></script>
+  <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+
+  </main><!-- End #main -->
+
+  {% endblock %}

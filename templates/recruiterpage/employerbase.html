@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>PHINMA JOB HUB | Company Page</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="{{url_for('static',filename='assets/img/phinmajobhubminilogo.png')}}" rel="icon">
+  <link href="{{url_for('static',filename='assets/img/apple-touch-icon.png')}}" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="{{url_for('static',filename='assets/fonts/bootstrap/bootstrap-icons.css')}}" />
+  <link rel="stylesheet" href="{{url_for('static',filename='assets/css/employercss/main.css')}}" />
+
+  <link rel="stylesheet" href="{{url_for('static',filename='assets/vendor/overlay-scroll/OverlayScrollbars.min.css')}}" />
+
+  <!-- Template Main CSS File -->
+  <link href="{{url_for('static',filename='assets/css/style.css')}}" rel="stylesheet">
+
+{% block specificcss%}
+
+  <style>
+
+#postjob:hover{
+	color: #fff;
+	transition: 0.3s;
+	background-color: #ce2626;
+}
+
+  </style>
+  <style>
+	.hide {
+	display: none;
+	}
+</style>
+
+  {% endblock %}
+
+  {% block css %}
+
+  {% endblock %}
+  
+</head>
+<body>
+
+    <!-- Page wrapper start -->
+		<div class="page-wrapper">
+
+			<!-- Main container start -->
+			<div class="main-container">
+
+				<!-- Sidebar wrapper start -->
+				<nav id="sidebar" class="sidebar-wrapper" style="border-right: 5px; border-right-color: black;">
+
+					<!-- App brand starts -->
+					<div class="app-brand px-3 py-3 d-flex align-items-center">
+						<a href="{{url_for('employerpages', pages = 'dashboard')}}" class="d-flex align-items-center" style="height: 100%;">
+							<img src="{{url_for('static',filename='assets/img/phinmajobhubminilogo.png')}}" class="logo" alt="Bootstrap Gallery"><h3 style="color: #fff;">PHJ</h3>
+						</a>
+					</div>
+					<!-- App brand ends -->
+					
+
+					<!-- Sidebar profile starts -->
+					<div class="sidebar-user-profile">
+						{% block profile %}<img src="{{url_for('static',filename='assets/img/jobhubfavicon.jpg')}}" class="profile-thumb rounded-2 p-2 d-lg-flex d-none"
+							alt="Bootstrap Gallery" /> {% endblock %}
+							{% block employername %}
+						<h5 class="profile-name lh-lg mt-2 text-truncate">Employer 1</h5>
+						{% endblock %}
+						
+					</div>
+					<!-- Sidebar profile ends -->
+				
+					<hr style="height: 10px; border: 0; box-shadow: 0 10px 10px -10px #ffe9e9 inset;">
+				
+					<!-- Sidebar menu starts -->
+					<div class="sidebarMenuScroll">
+						<ul class="sidebar-menu">
+							{% block activedashboard %}<li> {% endblock %}
+								<a href="{{url_for('employerpages', pages='dashboard')}}">
+									<i class="bi bi-bar-chart-line"></i>
+									<span class="menu-text">Dashboard</span>
+								</a>
+							</li>
+							{% block activepostjob %}<li> {% endblock %}
+								<a href="{{url_for('employerpages', pages='postjob')}}">
+									<i class="bi bi-sticky"></i>
+									<span class="menu-text">Post Job</span>
+								</a>
+							</li>
+
+							{% block activemanagejob %}<li> {% endblock %}
+								<a href="{{url_for('employerpages', pages='managejobs')}}">
+									<i class="bi bi-briefcase"></i>
+									<span class="menu-text">Manage Jobs</span>
+								</a>
+							</li>
+							{% block activemanageapplicants %}<li> {% endblock %}
+								<a href="{{url_for('employerpages', pages='manageapplicants')}}">
+									<i class="bi bi-person-square"></i>
+									<span class="menu-text">Manage Applicants</span>
+								</a>
+							</li>
+
+							{% block activenotif %}<li> {% endblock %}
+								<a href="{{url_for('employerpages', pages='notification')}}">
+									<i class="bi bi-bell"></i>
+									<span class="menu-text">Notifications</span>
+								</a>
+							</li>
+
+							{% block activemessages %}<li> {% endblock %}
+								<a href="{{url_for('employerpages', pages='messages')}}">
+									<i class="bi bi-envelope"></i>
+									<span class="menu-text">Messages</span>
+								</a>
+							</li>
+
+							<li>
+								<a href="{{url_for('employerpages', pages='logout')}}">
+									<i class="bi bi-gear"></i>
+									<span class="menu-text">Log Out</span>
+								</a>
+							</li>
+
+							
+						</ul>
+					</div>
+					<!-- Sidebar menu ends -->
+
+				</nav>
+				<!-- Sidebar wrapper end -->
+
+				<!-- App container starts -->
+				<div class="app-container">
+
+					<!-- App header starts -->
+					<div class="app-header d-flex align-items-center">
+
+						<!-- Toggle buttons start -->
+						<div class="d-flex">
+							<button class="btn btn-success me-2 toggle-sidebar" id="toggle-sidebar">
+								<i class="bi bi-chevron-left fs-5"></i>
+							</button>
+							<button class="btn btn-success me-2 pin-sidebar" id="pin-sidebar">
+								<i class="bi bi-chevron-left fs-5"></i>
+							</button>
+						</div>
+						<!-- Toggle buttons end -->						
+
+						<!-- App header actions start -->
+						<div class="header-actions">
+							<div class="d-lg-block d-none me-2">
+
+							</div>
+							
+							
+							<div>
+								<a href="{{url_for('employerpages', pages = 'messages')}}" class="d-flex p-2 py-3"><i class="bi bi-envelope fs-2 lh-1"></i></a>
+							</div>
+							<div class="dropdown ms-3">
+								<a class="dropdown-toggle d-flex p-2 py-3" href="" role="button" data-bs-toggle="dropdown"
+									aria-expanded="false">
+									<i class="bi bi-bell fs-2 lh-1"></i>
+								</a>
+								<div class="dropdown-menu dropdown-menu-end shadow">
+									{% block notifications %}
+									<div class="dropdown-item">
+										
+									</div>
+									
+									
+									{% endblock %}
+
+									<div class="border-top py-2 px-3 text-end">
+										<a href="{{url_for('employerpages', pages='notification')}}">View all</a>
+									</div>
+								</div>
+							</div>
+							<div class="dropdown ms-3">
+								<a id="userSettings" class="dropdown-toggle d-flex py-2 align-items-center text-decoration-none"
+									href="#!" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+									{% block employername2 %}<span class="d-none d-md-block me-2">Employer 1</span>{% endblock %}
+									{% block profile2 %}<img src="{{url_for('static',filename='assets/img/mini-jobhubicon.png')}}" class="rounded-circle img-3x" alt="Bootstrap Gallery" />{% endblock %}
+								</a>
+								<div class="dropdown-menu dropdown-menu-end shadow">
+									<a class="dropdown-item d-flex align-items-center" id="postjob" href="{{url_for('employerpages', pages='postjob')}}"><i
+										class="bi bi-sticky fs-4 me-2"></i>Post A Job</a>
+									<a class="dropdown-item d-flex align-items-center" href="{{url_for('employerpages', pages = 'profile')}}"><i
+											class="bi bi-person fs-4 me-2"></i>Profile</a>
+									
+									<a class="dropdown-item d-flex align-items-center" href="{{url_for('employerpages', pages='logout')}}"><i
+											class="bi bi-escape fs-4 me-2"></i>Logout</a>
+											
+								</div>
+							</div>
+						</div>
+						<!-- App header actions end -->
+
+					</div>
+					<!-- App header ends -->
+
+                    {% block content %}
+                    {% endblock %}
+
+                </div>
+                <!-- Main container end -->
+    
+            </div>
+            <!-- Page wrapper end -->
+
+    <!-- ======= Footer ======= -->
+	<div class="">
+    <footer id="footer" style="margin-bottom: 0; margin-top: 0; text-wrap: wrap ; padding-bottom: 5px;">
+        
+		
+        <div class="container" style="margin-top: 0; margin-bottom: 0; padding-top: 0; padding-bottom: 0;">
+            <div class="copyright" style="padding-top: 0;">
+                &copy; Copyright <strong><span>Team JJL</span></strong>. All Rights Reserved
+            </div>
+            
+        </div>
+
+
+    </footer><!-- End Footer -->
+</div>
+
+    <div id="preloader"></div>
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+    <!-- Required jQuery first, then Bootstrap Bundle JS -->
+		<script src="{{url_for('static',filename='assets/js/employerdashboard/jquery.min.js')}}"></script>
+        <script src="{{url_for('static',filename='assets/js/employerdashboard/bootstrap.bundle.min.js')}}"></script>
+
+        <!-- Overlay Scroll JS -->
+		<script src="{{url_for('static',filename='assets/vendor/overlay-scroll/jquery.overlayScrollbars.min.js')}}"></script>
+		<script src="{{url_for('static',filename='assets/vendor/overlay-scroll/custom-scrollbar.js')}}"></script>
+
+        <!-- Custom JS files -->
+		<script src="{{url_for('static',filename='assets/js/employerdashboard/custom.js')}}"></script>
+
+
+    <!-- Template Main JS File -->
+    <script src="{{url_for('static',filename='assets/js/main.js')}}"></script>
+
+	<script>
+		function changeCardContent(option) {
+const contentToday = document.getElementById("content-today");
+const contentMonth = document.getElementById("content-month");
+const contentYear = document.getElementById("content-year");
+const contentTotal = document.getElementById("content-all");
+
+// Hide all content divs
+contentToday.classList.add("hide");
+contentMonth.classList.add("hide");
+contentYear.classList.add("hide");
+contentTotal.classList.add("hide");
+
+// Show the selected content div
+if (option === "Option 1") {
+contentToday.classList.remove("hide");
+} else if (option === "Option 2") {
+contentMonth.classList.remove("hide");
+} else if (option === "Option 3") {
+contentYear.classList.remove("hide");
+} else if (option === "Option 4") {
+contentTotal.classList.remove("hide");
+}
+}
+	</script>
+
+	{% block js%} {% endblock %}
+
+</body>
+</html>

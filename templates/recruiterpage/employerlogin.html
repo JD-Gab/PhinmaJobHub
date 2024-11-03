@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+
+{% block css %}
+
+  <!-- Vendor CSS Files -->
+  <link href="{{url_for('static',filename='assets/vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
+  <link href="{{url_for('static',filename='assets/vendor/bootstrap-icons/bootstrap-icons.css')}}" rel="stylesheet">
+  <link href="{{url_for('static',filename='assets/vendor/boxicons/css/boxicons.min.css')}}" rel="stylesheet">
+  <link href="{{url_for('static',filename='assets/vendor/glightbox/css/glightbox.min.css')}}" rel="stylesheet">
+
+  <!--Icon Font Stylesheet-->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="{{url_for('static',filename='assets/css/style.css')}}" rel="stylesheet">
+
+</head>
+{% endblock %}
+
+{% block content %}
+    <main id="main" style="margin-bottom: 0px;">
+    <section class="h-100 gradient-form d-flex" style="background-color: #eeeeee;">
+        <div class="container py-5 h-100">
+          <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-xl-10">
+              <div class="card rounded-3 text-black" style="background-color: #333652; border: none;">
+                <div class="row g-0">
+                  <div class="col-lg-6">
+                    <div class="card-body p-md-5 mx-md-4">
+      
+                      <div class="text-center">
+                        <img src="static/assets/img/phinmajobhublogo.png"
+                          style="width: 295px;" alt="logo">
+                        <h4 class="mt-1 mb-5 pb-1" style="color: #fff;">LOGIN FOR RECRUITERS</h4>
+                      </div>
+      
+                      <form action="{{url_for('employerpage')}}" method="POST">
+                        <p style="font: bold; color: #fff;">Login to access employer perks and post jobs:</p>
+      
+                        <div class="form-outline mb-4">
+                          <input type="email" id="form2Example11" name="email" class="form-control"
+                            placeholder="Enter phone number or email address" required/>
+                          <label class="form-label" for="form2Example11" style="color: #fff;"><small>Username</small></label>
+                        </div>
+      
+                        <div class="form-outline mb-4">
+                          <input type="password" id="form2Example22" name="password" class="form-control" placeholder="Enter password" required/>
+                          <label class="form-label" for="form2Example22" style="color: #fff;"><small>Password</small></label>
+                        </div>
+
+                        {% if error %}
+                        <div class="alert border border-danger alert-dismissible fade show text-danger mt-2" role="alert">
+                            <b>Error!</b> {{ error }}
+                        	<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                        {% endif %}
+      
+                        <div class="text-center pt-1 mb-5 pb-1">
+                          <input class="btn btn-primary btn-block fa-lg mb-3" style="color: #fff;" type="submit" value="LOGIN">
+                          <style>
+                            .btn-primary{
+                              color: #1d3f5b;
+                            }
+                          </style>
+                            </input>
+                          <a class="text-muted" href="{{url_for('forgotpassword')}}"><small style="color: #fff;">Forgot password?</small></a>
+                        </div>
+      
+                      </form>
+      
+                    </div>
+                  </div>
+                  <div class="col-lg-6 d-flex align-items-center gradient-custom-2">
+                    <div class="text-dark px-3 py-4 p-md-5 mx-md-4">
+                      <h4 class="mb-4">PHINMA Job Hub and its partners!</h4>
+                      <p class="small mb-0">As part of PHINMA UI, this  job searching website is dedicated for the alumni of PHINMA UI as its main users. With the partnerships of PHINMA UI with other companies, this employer section is mainly for them to have a platform to find their perfect candidates in the number of alumni of UI.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    {% endblock %}
+    
+    {% block js %}
+    <!-- Vendor JS Files -->
+    <script src="{{url_for('static',filename='assets/vendor/purecounter/purecounter_vanilla.js')}}"></script>
+    <script src="{{url_for('static',filename='assets/vendor/aos/aos.js')}}"></script>
+    <script src="{{url_for('static',filename='assets/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+    <script src="{{url_for('static',filename='assets/vendor/glightbox/js/glightbox.min.js')}}"></script>
+    <script src="{{url_for('static',filename='assets/vendor/isotope-layout/isotope.pkgd.min.js')}}"></script>
+    <script src="{{url_for('static',filename='assets/vendor/swiper/swiper-bundle.min.js')}}"></script>
+
+    <!-- Template Main JS File -->
+    <script src="{{url_for('static',filename='assets/js/main.js')}}"></script>
+
+    {% endblock %}

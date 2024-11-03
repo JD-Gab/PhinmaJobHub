@@ -1,0 +1,394 @@
+{% extends '/recruiterpage/employerbase.html' %}
+{% block activepostjob %} <li class="active current-page"> {% endblock %}
+{% block employername %}<h5 class="profile-name lh-lg mt-2 text-truncate">{{compname[0][2]}}</h5>{% endblock %}
+{% block employername2 %}<span class="d-none d-md-block me-2">{{compname[0][2]}}</span>{% endblock %}
+{% block profile %}<img src="{{url_for('static',filename='assets/img/employerprofilepic/' + compname[0][10])}}" class="profile-thumb rounded-2 p-2 d-lg-flex d-none" alt="Bootstrap Gallery" /> {% endblock %}
+{% block profile2 %}<img src="{{url_for('static',filename='assets/img/employerprofilepic/' + compname[0][10])}}" class="rounded-circle img-3x" alt="Bootstrap Gallery" />{% endblock %}
+{% block notifications %}
+{% if notif %}
+<div class="dropdown-item">
+	<div class="d-flex py-2 border-bottom">
+		{% if 'https' in notif[0][5] %}
+		<img src="{{notif[0][5]}}" class="img-4x me-3 rounded-3" alt="Admin Theme" />
+		{% else %}
+		<img src="{{url_for('static',filename='assets/img/userprofilepic/' + notif[0][5])}}" class="img-4x me-3 rounded-3" alt="Admin Theme" />
+		{% endif %}
+		<div class="m-0">
+			<h5 class="mb-1 fw-semibold">{{notif[0][3]}}</h5>
+			<p class="mb-1">{{notif[0][3]}}  applied to your job post.</p>
+			<p class="small m-0 text-primary">{{notif[0][2]}}</p>
+		</div>
+	</div>
+</div>
+
+{% else %}
+
+<div class="dropdown-item">
+	<div class="d-flex py-2 border-bottom">
+		<p> No notification. </p>
+	</div>
+</div>
+
+{%endif%}
+
+{% endblock %}
+
+
+{% block specificcss %}
+  <style>
+.div-block ul li{
+	list-style: none;
+}
+
+.d-block a,
+.d-block a:focus {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 15px;
+  font-weight: 600;
+  color: #131314;
+  white-space: nowrap;
+  transition: 0.3s;
+  position: relative;
+}
+
+
+	.getstarted1,
+ .getstarted1:focus {
+  padding: 8px 25px;
+  margin-left: 1px;
+  border-radius: 4px;
+  color: #111010;
+  font-weight: 400;
+  border: 2px solid #ce2626;
+}
+
+.getstarted1:hover,
+.getstarted1:focus:hover {
+  color: #fff;
+  background: #ce2626;
+}
+
+.getstarted1:hover:before,
+ li:hover>.getstarted1:before {
+  visibility: hidden;
+}
+
+#postjob:hover{
+	color: #fff;
+	transition: 0.3s;
+	background-color: #ce2626;
+}
+
+body{
+margin-top:20px;
+background-color:#f2f6fc;
+color:#69707a;
+}
+.img-account-profile {
+    height: 10rem;
+}
+.rounded-circle {
+    border-radius: 50% !important;
+}
+.card {
+    box-shadow: 0 0.15rem 1.75rem 0 rgb(33 40 50 / 15%);
+}
+.card .card-header {
+    font-weight: 500;
+}
+.card-header:first-child {
+    border-radius: 0.35rem 0.35rem 0 0;
+}
+.card-header {
+    padding: 1rem 1.35rem;
+    margin-bottom: 0;
+    background-color: rgba(33, 40, 50, 0.03);
+    border-bottom: 1px solid rgba(33, 40, 50, 0.125);
+}
+
+
+.nav-borders .nav-link.active {
+    color: #0061f2;
+    border-bottom-color: #0061f2;
+}
+.nav-borders .nav-link {
+    color: #69707a;
+    border-bottom-width: 0.125rem;
+    border-bottom-style: solid;
+    border-bottom-color: transparent;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+   
+  </style>
+
+  {% endblock %}
+  
+  {% block content %}
+
+					
+						<div class="container-xl px-4 mt-4">
+							<div class="row">
+								<div class="col-xl-4">
+							
+									<div class="card mb-4 mb-xl-0">
+										<div class="card-header">Company Picture</div>
+										<div class="card-body text-center">
+							
+											<img class="img-account-profile rounded-circle mb-2" src="{{url_for('static',filename='assets/img/employerprofilepic/' + compname[0][10])}}" alt="company picture">
+							
+											
+										</div>
+									</div>
+								</div>
+								<div class="col-xl-8">
+
+									{% if jobtoedit %}
+									{% for data in jobtoedit %}
+							
+									<div class="card mb-4">
+										<div class="card-header">Basic Details</div>
+											<div class="card-body">
+												<form action="{{url_for('postjobprocess', jobprocess = 'edit', jobid = data[0])}}" method="POST">
+							
+													<div class="mb-3">
+														<label class="mb-1" for="jobtitle" style="font-size: 24px;">Job Title</label>
+														<input class="form-control" name="jobtitle" id="jobtitle" type="text" placeholder="..." value="{{data[3]}}" required>
+													</div>
+
+													<div class="mb-3">
+														<label class="small mb-1" for="jobdescription">Job Description</label>
+														<textarea name="jobdescription" class="form-control" rows="5" value="{{data[8]}}" placeholder="..." required>{{data[8]}}</textarea>
+													</div>
+							
+													<div class="row gx-3 mb-3">
+							
+														<div class="col-md-6">
+															<label class="small mb-1" for="jobcategory">Job Category</label>
+															<select class="form-select" value="{{data[2]}}" name="jobcategory" aria-label="" required>
+																{% if data[2] %}
+																<option value="{{data[2]}}" selected readonly>{{data[2]}}</option>
+																{% else %}
+																<option selected disabled>Choose Job Category</option>
+																{% endif %}
+																{% for cat in categories %}
+																<option value="{{cat}}">{{cat}}</option>
+																{% endfor %}
+																
+															</select>
+														</div>
+							
+														<div class="col-md-6">
+															<label class="small mb-1" for="jobtype">Job Type</label>
+															<select class="form-select" name="jobtype" aria-label="" required>
+																{% if data[10] %}
+																<option value="{{data[10]}}" selected readonly>{{data[10]}}</option>
+																{% else %}
+																<option selected disabled>Choose Job Type</option>
+																{% endif %}
+
+																<option value="Full Time">Full Time</option>
+																<option value="Part Time">Part Time</option>
+																
+															</select>
+														</div>
+													</div>
+							
+													<div class="row gx-3 mb-3">
+							
+														<div class="col-md-6">
+															<label class="small mb-1" for="inputOrgName">Job Level</label>
+															<select class="form-select" name="joblevel" aria-label="" required>
+																{% if data[11] %}
+																<option value="{{data[11]}}" selected readonly>{{data[11]}}</option>
+																{% else %}
+																<option selected disabled>Choose Job Level</option>
+																{% endif %}
+
+																<option value="Team Leader">Team Leader</option>
+																<option value="Senior">Senior</option>
+																<option value="Junior">Junior</option>
+																<option value="Other">Other</option>
+															</select>
+														</div>
+							
+														<div class="col-md-6">
+															<label class="small mb-1" for="inputLocation">Experience</label>
+															<select class="form-select" name="experience" aria-label="" required>
+																{% if data[7] %}
+																<option value="{{data[7]}}" selected readonly>{{data[7]}}</option>
+																{% else %}
+																<option selected disabled>Experience</option>
+																{% endif %}
+
+																<option value="Fresh">Fresh</option>
+																<option value="1+ Years">1+ Years</option>
+																<option value="5+ Years">5+ Years</option>
+																<option value="8+ Years">8+ Years</option>
+															</select>
+														</div>
+													</div>
+
+													<div class="row gx-3 mb-3">
+
+														<div class="col-md-3 col-lg-3 col-sm-3">
+															<label class="small mb-1" for="jobtitle">Min. Salary</label>
+															<input class="form-control mb-0" name="minsalary" id="jobtitle" type="number" min="500" placeholder="" value="{{data[4]}}" required>
+															
+														</div>
+
+														
+
+														<div class="col-md-3 col-lg-3 col-sm-3">
+															<label class="small mb-1" for="jobtitle">Max. Salary</label>
+															<input class="form-control mb-0" name="maxsalary" id="jobtitle" type="number" min="1000" max="999999" placeholder="" value="{{data[5]}}" required>
+
+														</div>
+
+														<div class="col-md-6 col-lg-6 col-sm-6">
+															<label class="small mb-1" for="deadline">Job Expired Date/Deadline</label>
+															<input id="deadline" value="{{data[6]}}" name="expireddate" class="form-control" type="date" required>
+														</div>
+													</div>
+
+													<div class="mb-3">
+
+															<label class="small mb-1" for="jobtitle">Location</label>
+															<input class="form-control" name="location" id="jobtitle" type="text" placeholder="Enter job location" value="{{data[12]}}" required>
+														
+													</div>
+							
+													<div class="mb-3">
+														<label class="small mb-1" for="inputEmailAddress">Skills/Qualification</label>
+														<textarea name="skills" class="form-control" rows="5" id="inputEmailAddress" value="{{data[13]}}" placeholder="..." required>{{data[13]}}</textarea>
+													</div>	
+							
+													<input class="btn btn-success submit-button mt-5" type="submit" value="Save changes" style="width: 100%;"></input>
+													
+												</form>
+											</div>
+										</div>
+									</div>
+									{% endfor %}
+
+									{% else %}
+
+									<div class="card mb-4">
+										<div class="card-header">Basic Details</div>
+											<div class="card-body">
+												<form action="{{url_for('postjobprocess',jobprocess = 'insert')}}" method="POST">
+							
+													<div class="mb-3">
+														<label class="mb-1" for="jobtitle" style="font-size: 24px;">Job Title</label>
+														<input class="form-control" name="jobtitle" id="jobtitle" type="text" placeholder="..." value="" required>
+													</div>
+
+													<div class="mb-3">
+														<label class="small mb-1" for="jobdescription">Job Description</label>
+														<textarea name="jobdescription" class="form-control" rows="5" value="" placeholder="..." required> </textarea>
+													</div>
+							
+													<div class="row gx-3 mb-3">
+							
+														<div class="col-md-6">
+															<label class="small mb-1" for="jobcategory">Job Category</label>
+															<select class="form-select" value="" name="jobcategory" aria-label="" required>
+																<option selected disabled>Choose Job Category</option>
+																{% for cat in categories %}
+																<option value="{{cat}}">{{cat}}</option>
+																{% endfor %}
+																
+															</select>
+														</div>
+							
+														<div class="col-md-6">
+															<label class="small mb-1" for="jobtype">Job Type</label>
+															<select class="form-select" value="" name="jobtype" aria-label="" required>
+																<option selected disabled>Choose Job Type</option>
+																<option value="Full Time">Full Time</option>
+																<option value="Part Time">Part Time</option>
+																
+															</select>
+														</div>
+													</div>
+							
+													<div class="row gx-3 mb-3">
+							
+														<div class="col-md-6">
+															<label class="small mb-1" for="inputOrgName">Job Level</label>
+															<select class="form-select" value="" name="joblevel" aria-label="" required>
+																<option selected disabled>Choose Job Level</option>
+																<option value="Team Leader">Team Leader</option>
+																<option value="Senior">Senior</option>
+																<option value="Junior">Junior</option>
+																<option value="Other">Other</option>
+															</select>
+														</div>
+							
+														<div class="col-md-6">
+															<label class="small mb-1" for="inputLocation">Experience</label>
+															<select class="form-select" value="" name="experience" aria-label="" required>
+																<option selected disabled>Experience</option>
+																<option value="Fresh">Fresh</option>
+																<option value="1+ Years">1+ Years</option>
+																<option value="5+ Years">5+ Years</option>
+																<option value="8+ Years">8+ Years</option>
+															</select>
+														</div>
+													</div>
+
+													<div class="row gx-3 mb-3">
+
+														<div class="col-md-3 col-lg-3 col-sm-3">
+															<label class="small mb-1" for="jobtitle">Min. Salary</label>
+															<input class="form-control mb-0" name="minsalary" id="jobtitle" type="number" min="500" placeholder="" value="" required>
+															
+														</div>
+
+														
+
+														<div class="col-md-3 col-lg-3 col-sm-3">
+															<label class="small mb-1" for="jobtitle">Max. Salary</label>
+															<input class="form-control mb-0" name="maxsalary" id="jobtitle" type="number" min="1000" max="999999" placeholder="" value="" required>
+
+														</div>
+
+														<div class="col-md-6 col-lg-6 col-sm-6">
+															<label class="small mb-1" for="deadline">Job Expired Date/Deadline</label>
+															<input id="deadline" value="" name="expireddate" class="form-control" type="date" required>
+														</div>
+													</div>
+
+													<div class="mb-3">
+
+														
+															<label class="small mb-1" for="jobtitle">Location</label>
+															<input class="form-control" name="location" id="jobtitle" type="text" placeholder="Enter job location" value="" required>
+														
+													</div>
+							
+													<div class="mb-3">
+														<label class="small mb-1" for="inputEmailAddress">Skills/Qualification</label>
+														<textarea name="skills" class="form-control" rows="5" id="inputEmailAddress" value="" placeholder="" required></textarea>
+													</div>
+
+													<input class="btn btn-danger submit-button mt-5" type="submit" value="Post Job!" style="width: 100%;"></input>
+													
+												</form>
+											</div>
+										</div>
+									</div>
+
+									{% endif %}
+
+								</div>
+							</div>
+
+					{% endblock %}
+

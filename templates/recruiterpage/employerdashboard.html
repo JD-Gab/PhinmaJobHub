@@ -1,0 +1,378 @@
+{% extends '/recruiterpage/employerbase.html' %}
+{% block activedashboard %} <li class="active current-page"> {% endblock %}
+{% block employername %}<h5 class="profile-name lh-lg mt-2 text-truncate">{{compname[0][2]}}</h5>{% endblock %}
+{% block employername2 %}<span class="d-none d-md-block me-2">{{compname[0][2]}}</span>{% endblock %}
+{% block profile %}<img src="{{url_for('static',filename='assets/img/employerprofilepic/' + compname[0][10])}}" class="profile-thumb rounded-2 p-2 d-lg-flex d-none" alt="Bootstrap Gallery" /> {% endblock %}
+{% block profile2 %}<img src="{{url_for('static',filename='assets/img/employerprofilepic/' + compname[0][10])}}" class="rounded-circle img-3x" alt="Bootstrap Gallery" />{% endblock %}
+
+{% block notifications %}
+{% if notif %}
+<div class="dropdown-item">
+	<div class="d-flex py-2 border-bottom">
+		{% if 'https' in notif[0][5] %}
+		<img src="{{notif[0][5]}}" class="img-4x me-3 rounded-3" alt="Admin Theme" />
+		{% else %}
+		<img src="{{url_for('static',filename='assets/img/userprofilepic/' + notif[0][5])}}" class="img-4x me-3 rounded-3" alt="Admin Theme" />
+		{% endif %}
+		<div class="m-0">
+			<h5 class="mb-1 fw-semibold">{{notif[0][3]}}</h5>
+			<p class="mb-1">{{notif[0][3]}}  applied to your job post.</p>
+			<p class="small m-0 text-primary">{{notif[0][2]}}</p>
+		</div>
+	</div>
+</div>
+
+{% else %}
+
+<div class="dropdown-item">
+	<div class="d-flex py-2 border-bottom">
+		<p> No notification. </p>
+	</div>
+</div>
+
+{%endif%}
+
+{% endblock %}
+
+
+{% block content %}
+					
+					<div class="container">
+				<main style="height: 100vh;">
+					
+					<div style="padding: 2rem 1.5rem 3rem 1.5rem; min-height: 110px;"></div>
+
+					<div class="app-container">
+						<div class="app-body">
+
+
+  {% with messages = get_flashed_messages() %}
+  {% if messages %}
+  <div class="alert alert-warning alert-dismissible fade show" role="alert">
+	<strong>Done!</strong> {{messages[0]}}
+	<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  {% endif %}
+  {% endwith %}
+							
+			
+								<!-- Row start -->
+								<div class="row">
+									<div class="col-lg-4 col-sm-6 col-12">
+										<div class="card shadow mb-4 p-3 rounded-2 justify-content-between flex-row my-info" id="content-today">
+											<div class="mt-3">
+												<h5 class="text-secondary fw-light">Posted Jobs | Today</h5>
+												
+												<h1 class="text-primary">{{statdays[0]}}</h1>
+												<span class="badge border border-primary text-primary me-3 dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Today</span>
+												
+												<div class="dropdown-menu">
+													<a class="dropdown-item" href="#" onclick="changeCardContent('Option 1')">Today</a>
+													<a class="dropdown-item" href="#" onclick="changeCardContent('Option 2')">This Month</a>
+													<a class="dropdown-item" href="#" onclick="changeCardContent('Option 3')">This Year</a>
+													<a class="dropdown-item" href="#" onclick="changeCardContent('Option 4')">Total</a>
+												</div>
+												
+											</div>
+											
+											<div class="d-flex align-items-center">
+												<div class=" d-flex align-items-center justify-content-center"><i class="bi bi-briefcase" style="font-size: 50px;"></i></div>
+											</div>
+											
+										</div>
+
+										<div class="card shadow mb-4 p-3 rounded-2 justify-content-between flex-row my-info hide" id="content-month">
+											<div class="mt-3">
+												<h5 class="text-secondary fw-light">Posted Jobs | Month</h5>
+												
+												<h1 class="text-primary">{{statdays[1]}}</h1>
+												<span class="badge border border-primary text-primary me-3 dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Today</span>
+												
+												<div class="dropdown-menu">
+													<a class="dropdown-item" href="#" onclick="changeCardContent('Option 1')">Today</a>
+													<a class="dropdown-item" href="#" onclick="changeCardContent('Option 2')">This Month</a>
+													<a class="dropdown-item" href="#" onclick="changeCardContent('Option 3')">This Year</a>
+													<a class="dropdown-item" href="#" onclick="changeCardContent('Option 4')">Total</a>
+												</div>
+												
+											</div>
+											
+											<div class="d-flex align-items-center">
+												<div class=" d-flex align-items-center justify-content-center"><i class="bi bi-briefcase" style="font-size: 50px;"></i></div>
+											</div>
+											
+											
+										</div>
+
+
+										<div class="card shadow mb-4 p-3 rounded-2 justify-content-between flex-row my-info hide" id="content-year">
+											<div class="mt-3">
+												<h5 class="text-secondary fw-light">Posted Jobs | Year</h5>
+												
+												<h1 class="text-primary">{{statdays[2]}}</h1>
+												<span class="badge border border-primary text-primary me-3 dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Today</span>
+												
+												<div class="dropdown-menu">
+													<a class="dropdown-item" href="#" onclick="changeCardContent('Option 1')">Today</a>
+													<a class="dropdown-item" href="#" onclick="changeCardContent('Option 2')">This Month</a>
+													<a class="dropdown-item" href="#" onclick="changeCardContent('Option 3')">This Year</a>
+													<a class="dropdown-item" href="#" onclick="changeCardContent('Option 4')">Total</a>
+												</div>
+												
+											</div>
+											
+											<div class="d-flex align-items-center">
+												<div class=" d-flex align-items-center justify-content-center"><i class="bi bi-briefcase" style="font-size: 50px;"></i></div>
+											</div>
+											
+											
+										</div>
+
+										<div class="card shadow mb-4 p-3 rounded-2 justify-content-between flex-row my-info hide" id="content-all">
+											<div class="mt-3">
+												<h5 class="text-secondary fw-light">Posted Jobs | Total</h5>
+												
+												<h1 class="text-primary">{{statdays[3]}}</h1>
+												<span class="badge border border-primary text-primary me-3 dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Total</span>
+												
+												<div class="dropdown-menu">
+													<a class="dropdown-item" href="#" onclick="changeCardContent('Option 1')">Today</a>
+													<a class="dropdown-item" href="#" onclick="changeCardContent('Option 2')">This Month</a>
+													<a class="dropdown-item" href="#" onclick="changeCardContent('Option 3')">This Year</a>
+													<a class="dropdown-item" href="#" onclick="changeCardContent('Option 4')">Total</a>
+												</div>
+												
+											</div>
+											
+											<div class="d-flex align-items-center">
+												<div class=" d-flex align-items-center justify-content-center"><i class="bi bi-briefcase" style="font-size: 50px;"></i></div>
+											</div>
+
+										</div>
+
+
+									</div>
+									<!-- SAVED APPLICANTS -->
+									<div class="col-lg-4 col-sm-6 col-12" id="accepted">
+										<div class="card shadow mb-4 p-3 rounded-2 justify-content-between flex-row">
+											<div class="mt-3">
+												<h5 class="text-secondary fw-light">Approved Applicants</h5>
+												<h1 class="text-primary">{{remarks[0]}}</h1>
+												<span class="badge border border-primary text-primary me-3 dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Accepted</span>
+												
+												<div class="dropdown-menu">
+													<a class="dropdown-item" href="#" onclick="applicationremarkcontent('Option 1')">Accepted</a>
+													<a class="dropdown-item" href="#" onclick="applicationremarkcontent('Option 2')">Rejected</a>
+													<a class="dropdown-item" href="#" onclick="applicationremarkcontent('Option 3')">Waiting</a>
+												</div>
+											</div>
+											
+											<div class="d-flex align-items-center">
+												<div class=" d-flex align-items-center justify-content-center"><i class="bi bi-check" style="font-size: 50px;"></i></div>
+											</div>
+										</div>
+									</div>
+									<!-- SAVED APPLICANTS -->
+									<div class="col-lg-4 col-sm-6 col-12 hide" id="rejected">
+										<div class="card shadow mb-4 p-3 rounded-2 justify-content-between flex-row">
+											<div class="mt-3">
+												<h5 class="text-secondary fw-light">Rejected Applicants</h5>
+												<h1 class="text-primary">{{remarks[1]}}</h1>
+												<span class="badge border border-primary text-primary me-3 dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Rejected</span>
+												
+												<div class="dropdown-menu">
+													<a class="dropdown-item" href="#" onclick="applicationremarkcontent('Option 1')">Accepted</a>
+													<a class="dropdown-item" href="#" onclick="applicationremarkcontent('Option 2')">Rejected</a>
+													<a class="dropdown-item" href="#" onclick="applicationremarkcontent('Option 3')">Waiting</a>
+												</div>
+											</div>
+											
+											<div class="d-flex align-items-center">
+												<div class=" d-flex align-items-center justify-content-center"><i class="bi bi-check" style="font-size: 50px;"></i></div>
+											</div>
+										</div>
+									</div>
+									<!-- SAVED APPLICANTS -->
+									<div class="col-lg-4 col-sm-6 col-12 hide" id="waiting">
+										<div class="card shadow mb-4 p-3 rounded-2 justify-content-between flex-row">
+											<div class="mt-3">
+												<h5 class="text-secondary fw-light">Waiting Applicants</h5>
+												<h1 class="text-primary">{{remarks[2]}}</h1>
+												<span class="badge border border-primary text-primary me-3 dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Waiting</span>
+												
+												<div class="dropdown-menu">
+													<a class="dropdown-item" href="#" onclick="applicationremarkcontent('Option 1')">Accepted</a>
+													<a class="dropdown-item" href="#" onclick="applicationremarkcontent('Option 2')">Rejected</a>
+													<a class="dropdown-item" href="#" onclick="applicationremarkcontent('Option 3')">Waiting</a>
+												</div>
+											</div>
+											
+											<div class="d-flex align-items-center">
+												<div class=" d-flex align-items-center justify-content-center"><i class="bi bi-check" style="font-size: 50px;"></i></div>
+											</div>
+										</div>
+									</div>
+
+									<div class="col-lg-4 col-sm-12 col-12">
+										<!-- APPLICANTS APPLIED PER COMPANY -->
+										<div class="card shadow mb-4 p-3 rounded-2 justify-content-between flex-row">
+											<div class="mt-3">
+												<h5 class="text-secondary fw-light">Applications</h5>
+												<h1 class="text-primary">{{applicants}}</h1>
+												<span class="badge border border-primary text-primary me-3">Total</span>
+											</div>
+											<div class="d-flex align-items-center">
+												<div class=" d-flex align-items-center justify-content-center"><i class="bi bi-person" style="font-size: 50px;"></i></div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<!-- Row end -->
+
+								<div class="row">
+
+								<div class="col-xxl-12 col-lg-8">
+									<div class="card shadow mb-4">
+										<div class="card-header">
+											<h5 class="card-title">Latest Job Posts</h5>
+										</div>
+
+										{% set count = [] %}
+								{% for jobdesc in job %}
+								<div class="job-item p-4 mb-4">
+									<div class="row g-4">
+										<div class="col-sm-12 col-md-8 d-flex align-items-center">
+											<img class="flex-shrink-0 img-fluid border rounded" src="{{url_for('static',filename='assets/img/jobhubfavicon.jpg')}}" alt="" style="width: 80px; height: 80px;">
+											<div class="text-start ps-4">
+												<h5 class="mb-3">{{jobdesc[3]}}</h5>
+												
+													{% if jobdesc[0] in alljobid %}
+
+													<span class="text-truncate me-3"><a href="{{url_for('employerpages', pages = 'manageapplicants', jobid = jobdesc[0], jobtitle = jobdesc[3])}}"><button type="button" class="btn btn-primary btn-sm"><i class="bi bi-person"></i>{{totalapplicants[count|length][1]}} Applicants</button></a></span>
+
+													{% set __ = count.append(1) %}
+		
+													{% else %}
+
+													<span class="text-truncate me-3"><button type="button" class="btn btn-primary btn-sm"><i class="bi bi-person"></i>0 Applicants</button></span>
+													
+													{% endif %}
+											
+											</div>
+										</div>
+
+										<div class="col-sm-12 col-md-4 d-flex flex-column align-items-start align-items-md-end justify-content-center">
+											<div class="d-flex mb-3">
+												<a href="{{url_for('employerpages', pages = 'postjob', jobid = jobdesc[0])}}"><button type="button" class="btn btn-warning btn-sm me-2"><i class="bi bi-pencil"></i></button></a>
+												<button type="button" class="btn btn-danger btn-sm me-2" data-bs-toggle="modal" data-bs-target="#deletejob{{jobdesc[0]}}"><i class="bi bi-trash"></i></button>
+											</div>
+											<small class="text-truncate"><i class="far fa-calendar-alt me-2"></i>Dead Line: {{jobdesc[6]}}</small>
+										</div>
+									</div>
+								</div>
+
+
+								<!-- Modal for deleting -->
+<div class="modal fade" id="deletejob{{jobdesc[0]}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Delete this job?</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+  
+          <form action="{{url_for('employerdeletejob', jobid = jobdesc[0])}}" method="POST">
+  
+            <div class="row mb-2">
+              <div class="col-lg-12 col-md-12 label ">Are you sure you want to delete this job post? All resume application from this job post will also be deleted.</div>
+            </div>
+            
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <input type="submit" class="btn btn-danger" value="Delete job post"></input>
+  
+  
+        </form>
+        
+        </div>
+    </div>
+    </div>
+  </div>
+  
+  
+  <!-- END OF MODAL-->
+
+								{% endfor %}
+	
+								</div> <!--column shadow-->
+								</div>
+								
+								<div class="col-xxl-4 col-sm-12 col-md-12 col-lg-4 col-12">
+									<div class="card shadow mb-4">
+										<div class="card-header">
+											<h5 class="card-title">Notifications</h5>
+										</div>
+										<div class="card-body">
+											<div class="scroll350 my-4">
+
+												{% for notiff in notif%}
+
+												<div class="d-flex flex-row mb-4">
+													<div class="icon-box lg flex-shrink-0 border border-primary rounded-5">
+														<i class="bi bi-envelope-open fs-2 text-primary"></i>
+													</div>
+													<div class="ms-3">
+														<p class="mb-2">
+															<a href="{{url_for('employerpages', pages = 'manageapplicants')}}"><strong class="text-primary">{{notiff[3]}}</strong></a>
+															<b>{{notiff[3]}}</b> applied to your job post.
+														</p>
+														<!-- Time -->
+														<small class="text-secondary">{{notiff[2]}}</small>
+													</div>
+												</div>
+
+												{% endfor %}	
+												
+											</div>
+										</div>
+									</div>
+								</div>
+
+							</div> <!--row-->
+			
+						</div>
+
+						
+					</div>
+					
+				</main>
+
+				</div>
+
+				<script>
+					function applicationremarkcontent(option) {
+			const accepted = document.getElementById("accepted");
+			const rejected = document.getElementById("rejected");
+			const waiting = document.getElementById("waiting");
+			
+			// Hide all content divs
+			accepted.classList.add("hide");
+			rejected.classList.add("hide");
+			waiting.classList.add("hide");
+			
+			// Show the selected content div
+			if (option === "Option 1") {
+			accepted.classList.remove("hide");
+			} else if (option === "Option 2") {
+			rejected.classList.remove("hide");
+			} else if (option === "Option 3") {
+			waiting.classList.remove("hide");
+			}
+			}
+				</script>
+
+				{% endblock %}
+
+				
